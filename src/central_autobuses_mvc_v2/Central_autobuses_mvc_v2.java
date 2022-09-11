@@ -2,6 +2,7 @@
 package central_autobuses_mvc_v2;
 
 import controller.controller;
+import model.modelBoletos;
 import model.modelConductors;
 import model.modelRutas;
 import model.modeloAutobuses;
@@ -21,6 +22,7 @@ public class Central_autobuses_mvc_v2 {
         modelRutas modelR = new modelRutas();
         modelConductors modelC = new modelConductors();
         modeloAutobuses modelA = new modeloAutobuses();
+        modelBoletos modelB = new modelBoletos();
         
         //Views
         Boleto BoletoView = new Boleto();
@@ -28,7 +30,8 @@ public class Central_autobuses_mvc_v2 {
         Rutas rutas = new Rutas();
         Conductores conductores = new Conductores();
         
-        controller Autobus_con = new controller(Home, modelR, BoletoView, autobuses, rutas, conductores, modelC, modelA);
+        controller Autobus_con = new controller(Home, modelR, BoletoView, autobuses, 
+                rutas, conductores, modelC, modelA, modelB);
         
     }
     

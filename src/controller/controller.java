@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import model.modelBoletos;
 import model.modelConductors;
 import model.modelRutas;
 import model.modeloAutobuses;
@@ -36,24 +37,35 @@ public class controller implements ActionListener, MouseListener{
     public modelConductors modelC; 
     public modelRutas model;
     public modeloAutobuses modelA;
+    public modelBoletos modelB;
     
-    public controller(Inicio vH, modelRutas m, Boleto vB, Autobuses vA, Rutas vR, Conductores vC, modelConductors mC, modeloAutobuses mA){
+    public controller(Inicio vH, modelRutas m, Boleto vB, Autobuses vA, Rutas vR, 
+            Conductores vC, modelConductors mC, modeloAutobuses mA, modelBoletos mB){
+        
+        //Models
         this.model = m;
         this.modelC = mC;
         this.modelA = mA;
+        this.modelB = mB;
         
+        //Views
         this.Home = vH;
         this.Ticket = vB;
         this.autobuses = vA;
         this.conductor = vC;
         this.rutes = vR;
         
+        //Inicio View
         vH.Boton_Entrar_Boletos.addMouseListener(this);
         vH.Boton_Entrar_Autobuses.addMouseListener(this);
         vH.Boton_Entrar_Rutas.addMouseListener(this);
         vH.Boton_Entrar_Conductores.addMouseListener(this);
-        vB.btnInicio.addMouseListener(this);
         
+        //Boletos View
+        vB.btnInicio.addMouseListener(this);
+        vB.Modificar.addMouseListener(this);
+        vB.Eliminar.addMouseListener(this);
+        vB.GUARDAR.addMouseListener(this);
         
         //Autobuses View
         vA.btnInicio.addMouseListener(this);
@@ -89,6 +101,7 @@ public class controller implements ActionListener, MouseListener{
         //          Events Home View
         //========================================
         if(e.getSource() == Home.Boton_Entrar_Boletos){
+            CargarBoletos();
             Home.setVisible(false);
             Ticket.setVisible(true);
         }
@@ -111,11 +124,27 @@ public class controller implements ActionListener, MouseListener{
             conductor.setVisible(true);
         }
         
+               
         
+        //==================================
+        //    Events of Boletos View
+        //==================================
         if(e.getSource() == Ticket.btnInicio){
             Ticket.setVisible(false);
             Home.setVisible(true);
         } 
+        
+        if(e.getSource() == Ticket.Modificar){
+            ActualizarBoletos();
+        }
+        
+        if(e.getSource() == Ticket.Eliminar){
+            EliminarBoletos();
+        }
+        
+        if(e.getSource() == Ticket.GUARDAR){
+            CrearBoleto();
+        }
         
         
                
@@ -125,7 +154,19 @@ public class controller implements ActionListener, MouseListener{
         if(e.getSource() == autobuses.btnInicio){
             autobuses.setVisible(false);
             Home.setVisible(true);
-        } 
+        }
+        
+        if(e.getSource() == autobuses.Modificar){
+            ActualizarAutobuses();
+        }
+        
+        if(e.getSource() == autobuses.Eliminar){
+            EliminarAutobuses();
+        }
+        
+        if(e.getSource() == autobuses.GUARDAR){
+            GuardarAutobuses();
+        }
         
         
         //===================================
@@ -170,6 +211,154 @@ public class controller implements ActionListener, MouseListener{
         }
                 
     }
+    
+    
+    //==========================
+    //   Métodos de Boleto
+    //==========================
+    public void CargarBoletos(){
+        ArrayList<String[]> objectData = new ArrayList<>(modelB.CargarRegistros());
+        
+        DefaultTableModel tabla = new DefaultTableModel();
+        tabla.addColumn("Id");
+        tabla.addColumn("Nombre");
+        tabla.addColumn("Costo");
+        tabla.addColumn("Asiento");
+        tabla.addColumn("Origen");
+        tabla.addColumn("Destino");
+        tabla.addColumn("Hora");
+        tabla.addColumn("Linea");
+        tabla.addColumn("Fecha");
+
+        //Model
+        for (int i = 0; i < objectData.size(); i++) {
+
+            String DBId = objectData.get(i)[0];
+            String DBNombre = objectData.get(i)[1];
+            String DBCosto = objectData.get(i)[2];
+            String DBAsiento = objectData.get(i)[3];
+            String DBOrigen = objectData.get(i)[4];
+            String DBDestino = objectData.get(i)[5];
+            String DBHora = objectData.get(i)[6];
+            String DBLinea = objectData.get(i)[7];
+            String DBFecha = objectData.get(i)[8];
+
+            tabla.addRow(new Object[]{DBId, DBNombre, DBCosto, DBAsiento,
+                DBOrigen, DBDestino, DBHora, DBLinea, DBFecha});
+
+        }
+
+        Ticket.TableBoletos.setModel(tabla);
+        Ticket.tablaDiseño();
+    }
+    
+    public void ActualizarBoletos(){
+        if (!Ticket.txtID.getText().equals("")) {
+            int Id = Integer.parseInt(Ticket.txtID.getText());
+            String nombre = Ticket.txtNombre.getText();
+            Float costo = Float.parseFloat(Ticket.txtCosto.getText());
+            int Asiento = Integer.parseInt(Ticket.BoxAsiento.getSelectedItem().toString());
+            String Origen = Ticket.txtOrigen.getText();
+            String Destino = Ticket.txtDestino.getText();
+            String Horario = Ticket.txtHorario.getText();
+            String Linea = Ticket.txtLinea.getText();
+
+            String formato = Ticket.jDateFecha.getDateFormatString();
+            Date date = Ticket.jDateFecha.getDate();
+            SimpleDateFormat sdf = new SimpleDateFormat(formato);
+            String Fsalida = String.valueOf(sdf.format(date));
+            System.out.print(Fsalida);
+
+            //Model
+            boolean res = modelB.ActualizarRegistro(nombre, costo, Asiento, Origen, Destino, Horario, Linea, Fsalida, Id);
+            if(res){
+                this.CargarBoletos();
+            }
+            
+        } else {
+            JOptionPane.showMessageDialog(null, "Seleccione un Registro");
+        }
+    }
+    
+    public void EliminarBoletos(){
+        
+        if (!Ticket.txtID.getText().equals("")) {
+            int Id = Integer.parseInt(Ticket.txtID.getText());
+            if (!Ticket.txtID.getText().equals("")) {
+                //Model
+                boolean res = modelB.EliminarRegistro(Id);
+                if(res){
+                    this.CargarBoletos();
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "Seleccione un Registro");
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Seleccione un registro");
+        }
+    }
+    
+    public void CrearBoleto(){
+        if (!Ticket.txtNombre.getText().equals("") && !Ticket.txtCosto.getText().equals("")
+                && !Ticket.txtOrigen.getText().equals("") && !Ticket.txtDestino.getText().equals("")
+                && !Ticket.txtHorario.getText().equals("") && !Ticket.txtLinea.getText().equals("")
+                && (Ticket.jDateFecha.getDate() != null)) {
+
+            String nombre = Ticket.txtNombre.getText();
+            Float costo = Float.parseFloat(Ticket.txtCosto.getText());
+            int Asiento = Integer.parseInt(Ticket.BoxAsiento.getSelectedItem().toString());
+            String Origen = Ticket.txtOrigen.getText();
+            String Destino = Ticket.txtDestino.getText();
+            String Horario = Ticket.txtHorario.getText();
+            String Linea = Ticket.txtLinea.getText();
+
+            String formato = Ticket.jDateFecha.getDateFormatString();
+            Date date = Ticket.jDateFecha.getDate();
+            SimpleDateFormat sdf = new SimpleDateFormat(formato);
+            String Fsalida = String.valueOf(sdf.format(date));
+
+            //Model
+            modelB.setDestino(Ticket.Destino);
+            modelB.setOrigen(Ticket.Origen);
+            modelB.setAsientos(Ticket.BoxAsiento);
+            modelB.setComboHorario(Ticket.ComboHorario);
+            modelB.setAsiento1(Ticket.Asiento1);
+            modelB.setAsiento2(Ticket.Asiento2);
+            modelB.setAsiento3(Ticket.Asiento3);
+            modelB.setAsiento4(Ticket.Asiento4);
+            modelB.setAsiento5(Ticket.Asiento5);
+            modelB.setAsiento6(Ticket.Asiento6);
+            modelB.setAsiento7(Ticket.Asiento7);
+            modelB.setAsiento8(Ticket.Asiento8);
+            modelB.setAsiento9(Ticket.Asiento9);
+            modelB.setAsiento10(Ticket.Asiento10);
+            modelB.setAsiento11(Ticket.Asiento11);
+            modelB.setAsiento12(Ticket.Asiento12);
+            modelB.setAsiento13(Ticket.Asiento13);
+            modelB.setAsiento14(Ticket.Asiento14);
+            modelB.setAsiento15(Ticket.Asiento15);
+            modelB.setAsiento16(Ticket.Asiento16);
+            modelB.setAsiento17(Ticket.Asiento17);
+            modelB.setAsiento18(Ticket.Asiento18);
+            modelB.setAsiento19(Ticket.Asiento19);
+            modelB.setAsiento20(Ticket.Asiento20);
+            modelB.setAsiento21(Ticket.Asiento21);
+            modelB.setAsiento22(Ticket.Asiento22);
+            modelB.setAsiento23(Ticket.Asiento23);
+            modelB.setAsiento24(Ticket.Asiento24);
+            modelB.setTextDestino(Ticket.txtDestino);
+            modelB.setTextHora(Ticket.txtHorario);
+            modelB.setTextOrigen(Ticket.txtOrigen);
+            modelB.setTextLinea(Ticket.txtLinea);
+            boolean res = modelB.GuardarRegistro(nombre, costo, Asiento, Origen, Destino, Horario, Linea, Fsalida);
+            if(res){
+                this.CargarBoletos();
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Llena todos los campos");
+        }
+    }
+    
     
     //===========================
     //  Métodos Autobuses
@@ -227,9 +416,8 @@ public class controller implements ActionListener, MouseListener{
                     boolean res = modelA.ActualizarRegistro(Matricula, año, marca, Modelo, asientos, linea, id);
                     if(res){
                         this.CargarAutobuses();
-                    }
-                    
-                    
+                    }                    
+                    this.limpiarCajasTextoAutobuses();
                     
                 }else{
                     JOptionPane.showMessageDialog(null, "Llene todos los campo");
@@ -247,10 +435,9 @@ public class controller implements ActionListener, MouseListener{
             //Model
             boolean res = modelA.EliminarRegistro(id);
             if(res){
-                this.ActualizarAutobuses();
+                this.CargarAutobuses();
             }
-            
-            
+            this.limpiarCajasTextoAutobuses();            
             
         }else{
             JOptionPane.showMessageDialog(null, "Seleccione un registro");
@@ -258,7 +445,7 @@ public class controller implements ActionListener, MouseListener{
     }
     
     public void GuardarAutobuses(){
-                if(!autobuses.txtMatricula.getText().equals("")&& !autobuses.txtAño.getText().equals("")
+        if(!autobuses.txtMatricula.getText().equals("")&& !autobuses.txtAño.getText().equals("")
            && !autobuses.txtMarca.getText().equals("") && !autobuses.txtModelo.getText().equals("")
            && !autobuses.txtAsientos.getText().equals("") && !autobuses.txtLinea.getText().equals("")){
         
@@ -270,14 +457,27 @@ public class controller implements ActionListener, MouseListener{
             String linea = autobuses.txtLinea.getText();
 
             //Model
-            
-            modelA.GuardarRegistro(Matricula, Año, Marca, Modelo, NoAsientos, linea);
+            boolean res = modelA.GuardarRegistro(Matricula, Año, Marca, Modelo, NoAsientos, linea);
+            if(res){
+                this.CargarAutobuses();
+            }
+            this.limpiarCajasTextoAutobuses();
         }else{
             JOptionPane.showMessageDialog(null, "Llene todos los campos");
         }
     }
     
-    public void limpiarCajasTextoAutobuses(){}
+    public void limpiarCajasTextoAutobuses(){
+        autobuses.txtID.setText("");
+        autobuses.txtMatricula.setText("");
+        autobuses.txtAño.setText("");
+        autobuses.txtMarca.setText("");
+        autobuses.txtModelo.setText("");
+        autobuses.txtAsientos.setText("");
+        autobuses.txtLinea.setText("");
+    }
+    
+    
     //===========================
     //  Métodos Conductors View
     //===========================

@@ -366,11 +366,6 @@ public class Autobuses extends javax.swing.JFrame {
         GUARDAR.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         GUARDAR.setText("GUARDAR");
         GUARDAR.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        GUARDAR.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                GUARDARMouseClicked(evt);
-            }
-        });
 
         javax.swing.GroupLayout BotonGuardarLayout = new javax.swing.GroupLayout(BotonGuardar);
         BotonGuardar.setLayout(BotonGuardarLayout);
@@ -522,45 +517,6 @@ public class Autobuses extends javax.swing.JFrame {
         Conductores Chofer = new Conductores();
         this.setVisible(false);
         Chofer.setVisible(true);    }//GEN-LAST:event_jLabel11MouseClicked
-
-    private void GUARDARMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_GUARDARMouseClicked
-        if(!txtMatricula.getText().equals("")&& !txtAño.getText().equals("")
-           && !txtMarca.getText().equals("") && !txtModelo.getText().equals("")
-           && !txtAsientos.getText().equals("") && !txtLinea.getText().equals("")){
-        
-            String Matricula = txtMatricula.getText();
-            String Año = txtAño.getText();
-            String Marca = txtMarca.getText();
-            String Modelo = txtModelo.getText();
-            String NoAsientos =txtAsientos.getText();
-            String linea = txtLinea.getText();
-
-            PreparedStatement ps;
-            String sql;
-
-            try{
-                sql = "INSERT INTO autobuses(Matricula, Año, Marca, Modelo, NoAsientos, "
-                        + "Linea) values(?,?,?,?,?,?)";
-                ps = con.prepareStatement(sql);
-                ps.setString(1, Matricula);
-                ps.setString(2, Año);
-                ps.setString(3, Marca);
-                ps.setString(4, Modelo);
-                ps.setString(5, NoAsientos);
-                ps.setString(6, linea);
-                ps.executeUpdate();
-                
-                actualizarTabla();
-                limpiarCajasTexto();                
-                JOptionPane.showMessageDialog(null, "Registro Agregado");
-                
-            }catch(SQLException e){
-               JOptionPane.showMessageDialog(null, "Error de conexión:" + e.getMessage());
-            }   
-        }else{
-            JOptionPane.showMessageDialog(null, "Llene todos los campos");
-        }
-    }//GEN-LAST:event_GUARDARMouseClicked
 
     private void tablaBusMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaBusMouseClicked
         int registro = tablaBus.rowAtPoint(evt.getPoint());

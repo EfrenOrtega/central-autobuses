@@ -6,31 +6,20 @@
 package view;
 
 
-import com.toedter.calendar.JDateChooser;
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.text.DateFormat;
 import java.text.ParseException;
 import javax.swing.JOptionPane;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Locale;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.ImageIcon;
-import javax.swing.JComboBox;
-import javax.swing.JDialog;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
@@ -54,32 +43,30 @@ public class Boleto extends javax.swing.JFrame {
     String AsientoDisponible;   
     
     public void inicializarAsientos(){
-        Asiento1.setIcon(new ImageIcon("Asientos/Asiento 1.png"));
-        Asiento2.setIcon(new ImageIcon("Asientos/Asiento 2.png"));
-        Asiento3.setIcon(new ImageIcon("Asientos/Asiento 3.png"));
-        Asiento4.setIcon(new ImageIcon("Asientos/Asiento 4.png"));
-        Asiento5.setIcon(new ImageIcon("Asientos/Asiento 5.png"));
-        Asiento6.setIcon(new ImageIcon("Asientos/Asiento 6.png"));
-        Asiento7.setIcon(new ImageIcon("Asientos/Asiento 7.png"));
-        Asiento8.setIcon(new ImageIcon("Asientos/Asiento 8.png"));
-        Asiento9.setIcon(new ImageIcon("Asientos/Asiento 9.png"));
-        Asiento10.setIcon(new ImageIcon("Asientos/Asiento 10.png"));
-        Asiento11.setIcon(new ImageIcon("Asientos/Asiento 11.png"));
-        Asiento12.setIcon(new ImageIcon("Asientos/Asiento 12.png"));
-        Asiento13.setIcon(new ImageIcon("Asientos/Asiento 13.png"));
-        Asiento14.setIcon(new ImageIcon("Asientos/Asiento 14.png"));
-        Asiento15.setIcon(new ImageIcon("Asientos/Asiento 15.png"));
-        Asiento16.setIcon(new ImageIcon("Asientos/Asiento 16.png"));
-        Asiento17.setIcon(new ImageIcon("Asientos/Asiento 17.png"));
-        Asiento18.setIcon(new ImageIcon("Asientos/Asiento 18.png"));
-        Asiento19.setIcon(new ImageIcon("Asientos/Asiento 19.png"));
-        Asiento20.setIcon(new ImageIcon("Asientos/Asiento 20.png"));
-        Asiento21.setIcon(new ImageIcon("Asientos/Asiento 21.png"));
-        Asiento22.setIcon(new ImageIcon("Asientos/Asiento 22.png"));
-        Asiento23.setIcon(new ImageIcon("Asientos/Asiento 23.png"));
-        Asiento24.setIcon(new ImageIcon("Asientos/Asiento 24.png"));
-        
-                
+        Asiento1.setIcon(new ImageIcon("build/classes/img/Asientos/Asiento 1.png"));
+        Asiento2.setIcon(new ImageIcon("build/classes/img/Asientos/Asiento 2.png"));
+        Asiento3.setIcon(new ImageIcon("build/classes/img/Asientos/Asiento 3.png"));
+        Asiento4.setIcon(new ImageIcon("build/classes/img/Asientos/Asiento 4.png"));
+        Asiento5.setIcon(new ImageIcon("build/classes/img/Asientos/Asiento 5.png"));
+        Asiento6.setIcon(new ImageIcon("build/classes/img/Asientos/Asiento 6.png"));
+        Asiento7.setIcon(new ImageIcon("build/classes/img/Asientos/Asiento 7.png"));
+        Asiento8.setIcon(new ImageIcon("build/classes/img/Asientos/Asiento 8.png"));
+        Asiento9.setIcon(new ImageIcon("build/classes/img/Asientos/Asiento 9.png"));
+        Asiento10.setIcon(new ImageIcon("build/classes/img/Asientos/Asiento 10.png"));
+        Asiento11.setIcon(new ImageIcon("build/classes/img/Asientos/Asiento 11.png"));
+        Asiento12.setIcon(new ImageIcon("build/classes/img/Asientos/Asiento 12.png"));
+        Asiento13.setIcon(new ImageIcon("build/classes/img/Asientos/Asiento 13.png"));
+        Asiento14.setIcon(new ImageIcon("build/classes/img/Asientos/Asiento 14.png"));
+        Asiento15.setIcon(new ImageIcon("build/classes/img/Asientos/Asiento 15.png"));
+        Asiento16.setIcon(new ImageIcon("build/classes/img/Asientos/Asiento 16.png"));
+        Asiento17.setIcon(new ImageIcon("build/classes/img/Asientos/Asiento 17.png"));
+        Asiento18.setIcon(new ImageIcon("build/classes/img/Asientos/Asiento 18.png"));
+        Asiento19.setIcon(new ImageIcon("build/classes/img/Asientos/Asiento 19.png"));
+        Asiento20.setIcon(new ImageIcon("build/classes/img/Asientos/Asiento 20.png"));
+        Asiento21.setIcon(new ImageIcon("build/classes/img/Asientos/Asiento 21.png"));
+        Asiento22.setIcon(new ImageIcon("build/classes/img/Asientos/Asiento 22.png"));
+        Asiento23.setIcon(new ImageIcon("build/classes/img/Asientos/Asiento 23.png"));
+        Asiento24.setIcon(new ImageIcon("build/classes/img/Asientos/Asiento 24.png"));                        
     }
     
     public void cargar(){
@@ -93,7 +80,7 @@ public class Boleto extends javax.swing.JFrame {
         String sql;
 
         try{
-            sql="SELECT Asiento FROM boletos WHERE Origen=? and Destino=? and Hora=? and Fecha = DATE()";
+            sql="SELECT Asiento FROM boletos WHERE Origen=? and Destino=? and Hora=? and Fecha = CURDATE()";
             ps = con.prepareStatement(sql);
             ps.setString(1, origen);
             ps.setString(2, destino);
@@ -189,7 +176,7 @@ public class Boleto extends javax.swing.JFrame {
 
             }
         }catch(SQLException e){
-            JOptionPane.showMessageDialog(null, "Error de conexión:" + e.getMessage());
+            JOptionPane.showMessageDialog(null, "Error de conexión: " + e.getMessage());
         }   
     }
     
@@ -249,7 +236,7 @@ public class Boleto extends javax.swing.JFrame {
         try{
             sql="SELECT HoraSalida, Destino, Origen, Linea FROM rutas AS Rut "
                     + "INNER JOIN autobuses AS Aut ON Rut.AutobusAsignado = Aut.Id_autobus  "
-                    + "WHERE Origen=? and Destino=? and HoraSalida =? and Fecha = DATE()";
+                    + "WHERE Origen=? and Destino=? and HoraSalida =? and Fecha = CURDATE()";
             ps = con.prepareStatement(sql);
             ps.setString(1, origen);
             ps.setString(2, destino);
@@ -418,55 +405,55 @@ public class Boleto extends javax.swing.JFrame {
                         int Asiento = Integer.parseInt(Asientos);
                         if(Asiento < 12){
                             if(Asiento == 1){
-                                Asiento1.setIcon(new ImageIcon("Asientos/Asiento 1 Rojo.png"));                                
+                                Asiento1.setIcon(new ImageIcon("build/classes/img/Asientos/Asiento 1 Rojo.png"));                                
                             }else if(Asiento == 2){
-                                Asiento2.setIcon(new ImageIcon("Asientos/Asiento 2 Rojo.png"));
+                                Asiento2.setIcon(new ImageIcon("build/classes/img/Asientos/Asiento 2 Rojo.png"));
                             }else if(Asiento==3){
-                                Asiento3.setIcon(new ImageIcon("Asientos/Asiento 3 Rojo.png"));
+                                Asiento3.setIcon(new ImageIcon("build/classes/img/Asientos/Asiento 3 Rojo.png"));
                             }else if(Asiento==4){
-                                Asiento4.setIcon(new ImageIcon("Asientos/Asiento 4 Rojo.png"));                                
+                                Asiento4.setIcon(new ImageIcon("build/classes/img/Asientos/Asiento 4 Rojo.png"));                                
                             }else if(Asiento == 5){
-                                Asiento5.setIcon(new ImageIcon("Asientos/Asiento 5 Rojo.png"));
+                                Asiento5.setIcon(new ImageIcon("build/classes/img/Asientos/Asiento 5 Rojo.png"));
                             }else if(Asiento==6){
-                                Asiento6.setIcon(new ImageIcon("Asientos/Asiento 6 Rojo.png"));
+                                Asiento6.setIcon(new ImageIcon("build/classes/img/Asientos/Asiento 6 Rojo.png"));
                             }else if(Asiento==7){
-                                Asiento7.setIcon(new ImageIcon("Asientos/Asiento 7 Rojo.png"));
+                                Asiento7.setIcon(new ImageIcon("build/classes/img/Asientos/Asiento 7 Rojo.png"));
                             }else if(Asiento == 8){
-                                Asiento8.setIcon(new ImageIcon("Asientos/Asiento 8 Rojo.png"));
+                                Asiento8.setIcon(new ImageIcon("build/classes/img/Asientos/Asiento 8 Rojo.png"));
                             }else if(Asiento == 9){
-                                Asiento9.setIcon(new ImageIcon("Asientos/Asiento 9 Rojo.png"));
+                                Asiento9.setIcon(new ImageIcon("build/classes/img/Asientos/Asiento 9 Rojo.png"));
                             }else if(Asiento == 10){
-                                Asiento10.setIcon(new ImageIcon("Asientos/Asiento 10 Rojo.png"));
+                                Asiento10.setIcon(new ImageIcon("build/classes/img/Asientos/Asiento 10 Rojo.png"));
                             }else if(Asiento == 11){
-                                Asiento11.setIcon(new ImageIcon("Asientos/Asiento 11 Rojo.png"));
+                                Asiento11.setIcon(new ImageIcon("build/classes/img/Asientos/Asiento 11 Rojo.png"));
                             }
                         }else if(Asiento >= 12){    
                             if(Asiento == 12){
-                                Asiento12.setIcon(new ImageIcon("Asientos/Asiento 12 Rojo.png"));
+                                Asiento12.setIcon(new ImageIcon("build/classes/img/Asientos/Asiento 12 Rojo.png"));
                             }else if(Asiento == 13){
-                                Asiento13.setIcon(new ImageIcon("Asientos/Asiento 13 Rojo.png"));
+                                Asiento13.setIcon(new ImageIcon("build/classes/img/Asientos/Asiento 13 Rojo.png"));
                             }else if(Asiento == 14){
-                                Asiento14.setIcon(new ImageIcon("Asientos/Asiento 14 Rojo.png"));
+                                Asiento14.setIcon(new ImageIcon("build/classes/img/Asientos/Asiento 14 Rojo.png"));
                             }else if(Asiento == 15){
-                                Asiento15.setIcon(new ImageIcon("Asientos/Asiento 15 Rojo.png"));
+                                Asiento15.setIcon(new ImageIcon("build/classes/img/Asientos/Asiento 15 Rojo.png"));
                             }else if(Asiento == 16){
-                                Asiento16.setIcon(new ImageIcon("Asientos/Asiento 16 Rojo.png"));
+                                Asiento16.setIcon(new ImageIcon("build/classes/img/Asientos/Asiento 16 Rojo.png"));
                             }else  if(Asiento == 17){
-                                Asiento17.setIcon(new ImageIcon("Asientos/Asiento 17 Rojo.png"));
+                                Asiento17.setIcon(new ImageIcon("build/classes/img/Asientos/Asiento 17 Rojo.png"));
                             }else if(Asiento == 18){
-                                Asiento18.setIcon(new ImageIcon("Asientos/Asiento 18 Rojo.png"));
+                                Asiento18.setIcon(new ImageIcon("build/classes/img/Asientos/Asiento 18 Rojo.png"));
                             }else if(Asiento == 19){
-                                Asiento19.setIcon(new ImageIcon("Asientos/Asiento 19 Rojo.png"));
+                                Asiento19.setIcon(new ImageIcon("build/classes/img/Asientos/Asiento 19 Rojo.png"));
                             }else if(Asiento == 20){
-                                Asiento20.setIcon(new ImageIcon("Asientos/Asiento 20 Rojo.png"));
+                                Asiento20.setIcon(new ImageIcon("build/classes/img/Asientos/Asiento 20 Rojo.png"));
                             }else if(Asiento == 21){
-                                Asiento21.setIcon(new ImageIcon("Asientos/Asiento 21 Rojo.png"));
+                                Asiento21.setIcon(new ImageIcon("build/classes/img/Asientos/Asiento 21 Rojo.png"));
                             }else if(Asiento == 22){
-                                Asiento22.setIcon(new ImageIcon("Asientos/Asiento 22 Rojo.png"));
+                                Asiento22.setIcon(new ImageIcon("build/classes/img/Asientos/Asiento 22 Rojo.png"));
                             }else if(Asiento == 23){
-                                Asiento23.setIcon(new ImageIcon("Asientos/Asiento 23 Rojo.png"));
+                                Asiento23.setIcon(new ImageIcon("build/classes/img/Asientos/Asiento 23 Rojo.png"));
                             }else if(Asiento == 24){
-                                Asiento24.setIcon(new ImageIcon("Asientos/Asiento 24 Rojo.png"));
+                                Asiento24.setIcon(new ImageIcon("build/classes/img/Asientos/Asiento 24 Rojo.png"));
                             }
                         }
                         if(Asiento != AsientoReservadoActual){
@@ -496,8 +483,6 @@ public class Boleto extends javax.swing.JFrame {
         initComponents();
         this.setLocationRelativeTo(null);
         llenarComboBoxOrigenDestino();
-        actualizarTabla();
-
     }
 
     /**
@@ -819,11 +804,6 @@ public class Boleto extends javax.swing.JFrame {
         Eliminar.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         Eliminar.setText("ELIMINAR");
         Eliminar.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        Eliminar.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                EliminarMouseClicked(evt);
-            }
-        });
 
         javax.swing.GroupLayout BotonEliminarLayout = new javax.swing.GroupLayout(BotonEliminar);
         BotonEliminar.setLayout(BotonEliminarLayout);
@@ -846,11 +826,6 @@ public class Boleto extends javax.swing.JFrame {
         Modificar.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         Modificar.setText("MODIFICAR");
         Modificar.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        Modificar.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                ModificarMouseClicked(evt);
-            }
-        });
 
         javax.swing.GroupLayout BotonModificarLayout = new javax.swing.GroupLayout(BotonModificar);
         BotonModificar.setLayout(BotonModificarLayout);
@@ -1151,82 +1126,6 @@ public class Boleto extends javax.swing.JFrame {
         }  
     }//GEN-LAST:event_GUARDARMouseClicked
 
-    private void ModificarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ModificarMouseClicked
-
-        if(!txtID.getText().equals("")){        
-            int Id=Integer.parseInt(txtID.getText());
-            String nombre = txtNombre.getText();
-            Float costo = Float.parseFloat(txtCosto.getText());
-            int Asiento= Integer.parseInt(BoxAsiento.getSelectedItem().toString());
-            String Origen = txtOrigen.getText();
-            String Destino = txtDestino.getText();
-            String Horario= txtHorario.getText();
-            String Linea = txtLinea.getText();
-
-            String formato = jDateFecha.getDateFormatString();
-            Date date = jDateFecha.getDate();
-            SimpleDateFormat sdf = new SimpleDateFormat(formato);
-            String Fsalida = String.valueOf(sdf.format(date));
-            System.out.print(Fsalida);
-
-            PreparedStatement ps;
-            String sql;
-
-            try{
-                sql = "UPDATE boletos SET Nombre=?, Costo=?, Asiento=?, "
-                    + "Origen=?, Destino=?, Hora=?, Linea=?, Fecha=?  WHERE Id_boletos=?";
-                ps = con.prepareStatement(sql);
-                ps.setString(1, nombre);
-                ps.setFloat(2, costo);
-                ps.setInt(3, Asiento);
-                ps.setString(4, Origen);
-                ps.setString(5, Destino);
-                ps.setString(6, Horario);
-                ps.setString(7, Linea);
-                ps.setString(8, Fsalida);
-                ps.setInt(9, Id);
-
-                ps.executeUpdate(); 
-
-                actualizarTabla();
-                AsientoDisponibles();
-                limpiarcajasTexto();
-
-            }catch(SQLException e){
-                JOptionPane.showMessageDialog(null, "Error de conexión:" + e.getMessage());
-            }
-        }else{
-            JOptionPane.showMessageDialog(null,"Seleccione un Registro");
-        }    
-    }//GEN-LAST:event_ModificarMouseClicked
-
-    private void EliminarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_EliminarMouseClicked
-        if(!txtID.getText().equals("")){
-            int Id = Integer.parseInt(txtID.getText());
-            if(!txtID.getText().equals("")){    
-                PreparedStatement ps;
-                String sql;
-
-                try {
-                    sql="DELETE FROM boletos WHERE id_boletos=?";
-                    ps = con.prepareStatement(sql);
-                    ps.setInt(1, Id);
-                    ps.executeUpdate();
-                    actualizarTabla();
-                    limpiarcajasTexto();
-                    inicializarAsientos();
-                    JOptionPane.showMessageDialog(null, "Registro Eliminado");
-                } catch (SQLException e) {
-                    JOptionPane.showMessageDialog(null, "Error de conexión:" + e.getMessage());
-                }
-            }else{
-                JOptionPane.showMessageDialog(null, "Seleccione un Registro");
-            }
-        }else{
-            JOptionPane.showMessageDialog(null, "Seleccione un registro");
-        }    
-    }//GEN-LAST:event_EliminarMouseClicked
-
     private void CargarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_CargarMouseClicked
         cargar();
     }//GEN-LAST:event_CargarMouseClicked
@@ -1265,7 +1164,7 @@ public class Boleto extends javax.swing.JFrame {
         try{
             sql="SELECT HoraSalida, Destino, Origen, Linea FROM rutas AS Rut "
                     + "INNER JOIN autobuses AS Aut ON Rut.AutobusAsignado = Aut.Id_autobus  "
-                    + "WHERE Origen=? and Destino=? and Fecha = DATE()";
+                    + "WHERE Origen=? and Destino=? and Fecha = CURDATE()";
             ps = con.prepareStatement(sql);
             ps.setString(1, origen);
             ps.setString(2, destino);
@@ -1286,7 +1185,7 @@ public class Boleto extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "No existe esta ruta");
             }
         }catch(SQLException e){
-            JOptionPane.showMessageDialog(null, "Error de conexión:" + e.getMessage());
+            JOptionPane.showMessageDialog(null, "Error de conexión: 1" + e.getMessage());
         }    
       }        
     }//GEN-LAST:event_btoCargarMouseClicked
@@ -1429,53 +1328,53 @@ public class Boleto extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel Asiento1;
-    private javax.swing.JLabel Asiento10;
-    private javax.swing.JLabel Asiento11;
-    private javax.swing.JLabel Asiento12;
-    private javax.swing.JLabel Asiento13;
-    private javax.swing.JLabel Asiento14;
-    private javax.swing.JLabel Asiento15;
-    private javax.swing.JLabel Asiento16;
-    private javax.swing.JLabel Asiento17;
-    private javax.swing.JLabel Asiento18;
-    private javax.swing.JLabel Asiento19;
-    private javax.swing.JLabel Asiento2;
-    private javax.swing.JLabel Asiento20;
-    private javax.swing.JLabel Asiento21;
-    private javax.swing.JLabel Asiento22;
-    private javax.swing.JLabel Asiento23;
-    private javax.swing.JLabel Asiento24;
-    private javax.swing.JLabel Asiento3;
-    private javax.swing.JLabel Asiento4;
-    private javax.swing.JLabel Asiento5;
-    private javax.swing.JLabel Asiento6;
-    private javax.swing.JLabel Asiento7;
-    private javax.swing.JLabel Asiento8;
-    private javax.swing.JLabel Asiento9;
+    public javax.swing.JLabel Asiento1;
+    public javax.swing.JLabel Asiento10;
+    public javax.swing.JLabel Asiento11;
+    public javax.swing.JLabel Asiento12;
+    public javax.swing.JLabel Asiento13;
+    public javax.swing.JLabel Asiento14;
+    public javax.swing.JLabel Asiento15;
+    public javax.swing.JLabel Asiento16;
+    public javax.swing.JLabel Asiento17;
+    public javax.swing.JLabel Asiento18;
+    public javax.swing.JLabel Asiento19;
+    public javax.swing.JLabel Asiento2;
+    public javax.swing.JLabel Asiento20;
+    public javax.swing.JLabel Asiento21;
+    public javax.swing.JLabel Asiento22;
+    public javax.swing.JLabel Asiento23;
+    public javax.swing.JLabel Asiento24;
+    public javax.swing.JLabel Asiento3;
+    public javax.swing.JLabel Asiento4;
+    public javax.swing.JLabel Asiento5;
+    public javax.swing.JLabel Asiento6;
+    public javax.swing.JLabel Asiento7;
+    public javax.swing.JLabel Asiento8;
+    public javax.swing.JLabel Asiento9;
     private javax.swing.JPanel BotonCargar;
     private javax.swing.JPanel BotonEliminar;
     private javax.swing.JPanel BotonGuardar;
     private javax.swing.JPanel BotonModificar;
-    private javax.swing.JComboBox<String> BoxAsiento;
-    private javax.swing.JComboBox<String> BoxFiltro;
-    private javax.swing.JLabel Cargar;
-    private javax.swing.JComboBox<String> ComboHorario;
-    private javax.swing.JComboBox<String> Destino;
-    private javax.swing.JLabel Eliminar;
-    private javax.swing.JLabel GUARDAR;
-    private javax.swing.JLabel Modificar;
-    private javax.swing.JComboBox<String> Origen;
-    private javax.swing.JTable TableBoletos;
+    public javax.swing.JComboBox<String> BoxAsiento;
+    public javax.swing.JComboBox<String> BoxFiltro;
+    public javax.swing.JLabel Cargar;
+    public javax.swing.JComboBox<String> ComboHorario;
+    public javax.swing.JComboBox<String> Destino;
+    public javax.swing.JLabel Eliminar;
+    public javax.swing.JLabel GUARDAR;
+    public javax.swing.JLabel Modificar;
+    public javax.swing.JComboBox<String> Origen;
+    public javax.swing.JTable TableBoletos;
     private javax.swing.JLabel Volante;
     private javax.swing.JLabel VolanteRojo;
     private javax.swing.JLabel btnAutobus;
-    private javax.swing.JLabel btnBuscar;
+    public javax.swing.JLabel btnBuscar;
     private javax.swing.JLabel btnConductores;
     public javax.swing.JLabel btnInicio;
     private javax.swing.JLabel btnRutas;
-    private javax.swing.JLabel btoCargar;
-    private com.toedter.calendar.JDateChooser jDateFecha;
+    public javax.swing.JLabel btoCargar;
+    public com.toedter.calendar.JDateChooser jDateFecha;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel12;
@@ -1510,13 +1409,13 @@ public class Boleto extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JLabel label;
-    private javax.swing.JTextField txtBuscar;
-    private javax.swing.JTextField txtCosto;
-    private javax.swing.JTextField txtDestino;
-    private javax.swing.JTextField txtHorario;
-    private javax.swing.JTextField txtID;
-    private javax.swing.JTextField txtLinea;
-    private javax.swing.JTextField txtNombre;
-    private javax.swing.JTextField txtOrigen;
+    public javax.swing.JTextField txtBuscar;
+    public javax.swing.JTextField txtCosto;
+    public javax.swing.JTextField txtDestino;
+    public javax.swing.JTextField txtHorario;
+    public javax.swing.JTextField txtID;
+    public javax.swing.JTextField txtLinea;
+    public javax.swing.JTextField txtNombre;
+    public javax.swing.JTextField txtOrigen;
     // End of variables declaration//GEN-END:variables
 }
