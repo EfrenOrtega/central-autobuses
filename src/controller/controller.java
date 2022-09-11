@@ -147,9 +147,6 @@ public class controller implements ActionListener, MouseListener{
         }
         
         if(e.getSource() == Home.BtnBoleto){
-            modelB.setOrigen(Ticket.Origen);
-            modelB.setDestino(Ticket.Destino);
-            modelB.llenarComboBoxOrigenDestino();
             CargarBoletos();
             Home.setVisible(false);
             Ticket.setVisible(true);
@@ -169,9 +166,9 @@ public class controller implements ActionListener, MouseListener{
         //FIN MENU        
         
         if(e.getSource() == Home.Boton_Entrar_Boletos){
-            CargarBoletos();
+            CargarBoletos();                      
             Home.setVisible(false);
-            Ticket.setVisible(true);
+            Ticket.setVisible(true);            
         }
         
         if(e.getSource() == Home.Boton_Entrar_Autobuses){
@@ -284,9 +281,6 @@ public class controller implements ActionListener, MouseListener{
         } 
         
         if(e.getSource() == autobuses.btnBoletos){
-            modelB.setOrigen(Ticket.Origen);
-            modelB.setDestino(Ticket.Destino);
-            modelB.llenarComboBoxOrigenDestino();
             CargarBoletos();
             autobuses.setVisible(false);
             Ticket.setVisible(true);
@@ -336,9 +330,6 @@ public class controller implements ActionListener, MouseListener{
         } 
         
         if(e.getSource() == rutes.btnBoletos){
-            modelB.setOrigen(Ticket.Origen);
-            modelB.setDestino(Ticket.Destino);
-            modelB.llenarComboBoxOrigenDestino();
             CargarBoletos();
             rutes.setVisible(false);
             Ticket.setVisible(true);
@@ -388,10 +379,7 @@ public class controller implements ActionListener, MouseListener{
         } 
         
         if(e.getSource() == conductor.btnBoletos){
-            modelB.setOrigen(Ticket.Origen);
-            modelB.setDestino(Ticket.Destino);
             CargarBoletos();
-            modelB.llenarComboBoxOrigenDestino();
             conductor.setVisible(false);
             Ticket.setVisible(true);
         }

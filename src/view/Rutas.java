@@ -409,7 +409,7 @@ public class Rutas extends javax.swing.JFrame {
         GUARDAR.setForeground(new java.awt.Color(255, 255, 255));
         GUARDAR.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         GUARDAR.setText("GUARDAR");
-        GUARDAR.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        GUARDAR.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
         javax.swing.GroupLayout BotonGuardarLayout = new javax.swing.GroupLayout(BotonGuardar);
         BotonGuardar.setLayout(BotonGuardarLayout);
@@ -431,7 +431,7 @@ public class Rutas extends javax.swing.JFrame {
         Eliminar.setForeground(new java.awt.Color(255, 255, 255));
         Eliminar.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         Eliminar.setText("ELIMINAR");
-        Eliminar.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        Eliminar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
         javax.swing.GroupLayout BotonEliminarLayout = new javax.swing.GroupLayout(BotonEliminar);
         BotonEliminar.setLayout(BotonEliminarLayout);
@@ -453,7 +453,7 @@ public class Rutas extends javax.swing.JFrame {
         Modificar.setForeground(new java.awt.Color(255, 255, 255));
         Modificar.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         Modificar.setText("MODIFICAR");
-        Modificar.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        Modificar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
         javax.swing.GroupLayout BotonModificarLayout = new javax.swing.GroupLayout(BotonModificar);
         BotonModificar.setLayout(BotonModificarLayout);
@@ -522,7 +522,7 @@ public class Rutas extends javax.swing.JFrame {
         jPanel1.add(jLabel22, new org.netbeans.lib.awtextra.AbsoluteConstraints(870, 520, 200, 30));
 
         btnBuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Buscar.png"))); // NOI18N
-        btnBuscar.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        btnBuscar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnBuscar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnBuscarMouseClicked(evt);

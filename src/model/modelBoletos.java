@@ -500,7 +500,7 @@ public class modelBoletos {
         String hora = this.ComboHorario.getSelectedItem().toString();
         PreparedStatement ps;
         String sql;
-
+        
         try {
             sql = "SELECT Asiento FROM boletos WHERE Origen=? and Destino=? and Hora=? and Fecha = CURDATE()";
             ps = con.prepareStatement(sql);
@@ -522,7 +522,7 @@ public class modelBoletos {
                     for (int i = 1; i <= 24; i++) {
                         AsientosDisponibles.add(String.valueOf(i));
                     }
-
+                    System.out.print("H");
                     while (rs.next()) {
                         String Asientos = rs.getString("Asiento");
                         int Asiento = Integer.parseInt(Asientos);
@@ -594,9 +594,9 @@ public class modelBoletos {
                 for (int i = 1; i <= 24; i++) {
                     this.BoxAsientos.addItem(String.valueOf(i));
                 }
-                //inicializarAsientos();
+                inicializarAsientos();
                 //limpiarcajasTexto();
-                //llenarFormulaio();
+                llenarFormulaio();
 
             }
         } catch (SQLException e) {
@@ -852,47 +852,4 @@ public class modelBoletos {
         }
     }
 
-    public String horaActual() {
-        SimpleDateFormat dtf = new SimpleDateFormat("yyyy-MM-dd");
-        Calendar calendar = Calendar.getInstance();
-
-        Date dateObj = calendar.getTime();
-        String formattedDate = dtf.format(dateObj);
-
-        return formattedDate;
-    }
-    
-    public void llenarComboBoxOrigenDestino() {
-        PreparedStatement ps;
-        String sql;
-
-        String HoraActual = horaActual();
-
-        try {
-            sql = "SELECT Origen, Destino FROM rutas WHERE Fecha = ?";
-            ps = con.prepareStatement(sql);
-            ps.setString(1, HoraActual);
-            ResultSet rs = ps.executeQuery();
-
-            if (rs.next()) {
-                if (rs.getRow() > 0) {
-                    rs = ps.executeQuery();
-                    inicializarAsientos();
-                    while (rs.next()) {
-                        String DBOrigen = rs.getString("Origen");
-                        String DBDestino = rs.getString("Destino");
-                        Origen.addItem(DBOrigen);
-                        Destino.addItem(DBDestino);
-                    }
-                }
-            } else {
-                System.out.print("No hay Rutas Actuales\n");
-            }
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Error de conexión:" + e.getMessage());
-        }
-
-        AutoCompleteDecorator.decorate(this.Destino);
-        AutoCompleteDecorator.decorate(this.Origen);
-    }
 }

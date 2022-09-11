@@ -275,10 +275,54 @@ public class Boleto extends javax.swing.JFrame {
         }   
     }
 
+    public String horaActual() {
+        SimpleDateFormat dtf = new SimpleDateFormat("yyyy-MM-dd");
+        Calendar calendar = Calendar.getInstance();
+
+        Date dateObj = calendar.getTime();
+        String formattedDate = dtf.format(dateObj);
+
+        return formattedDate;
+    }
+    
+    public void llenarComboBoxOrigenDestino() {
+        PreparedStatement ps;
+        String sql;
+
+        String HoraActual = horaActual();
+
+        try {
+            sql = "SELECT Origen, Destino FROM rutas WHERE Fecha = ?";
+            ps = con.prepareStatement(sql);
+            ps.setString(1, HoraActual);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                if (rs.getRow() > 0) {
+                    rs = ps.executeQuery();
+                    inicializarAsientos();
+                    while (rs.next()) {
+                        String DBOrigen = rs.getString("Origen");
+                        String DBDestino = rs.getString("Destino");
+                        Origen.addItem(DBOrigen);
+                        Destino.addItem(DBDestino);
+                    }
+                }
+            } else {
+                System.out.print("No hay Rutas Actuales\n");
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error de conexión:" + e.getMessage());
+        }
+
+        AutoCompleteDecorator.decorate(Destino);
+        AutoCompleteDecorator.decorate(Origen);
+    }
+    
     public Boleto() {
         initComponents();
         this.setLocationRelativeTo(null);
-        //llenarComboBoxOrigenDestino();
+        llenarComboBoxOrigenDestino();
     }
 
     /**
@@ -557,7 +601,7 @@ public class Boleto extends javax.swing.JFrame {
         GUARDAR.setForeground(new java.awt.Color(255, 255, 255));
         GUARDAR.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         GUARDAR.setText("GUARDAR");
-        GUARDAR.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        GUARDAR.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
         javax.swing.GroupLayout BotonGuardarLayout = new javax.swing.GroupLayout(BotonGuardar);
         BotonGuardar.setLayout(BotonGuardarLayout);
@@ -579,7 +623,7 @@ public class Boleto extends javax.swing.JFrame {
         Eliminar.setForeground(new java.awt.Color(255, 255, 255));
         Eliminar.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         Eliminar.setText("ELIMINAR");
-        Eliminar.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        Eliminar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
         javax.swing.GroupLayout BotonEliminarLayout = new javax.swing.GroupLayout(BotonEliminar);
         BotonEliminar.setLayout(BotonEliminarLayout);
@@ -601,7 +645,7 @@ public class Boleto extends javax.swing.JFrame {
         Modificar.setForeground(new java.awt.Color(255, 255, 255));
         Modificar.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         Modificar.setText("MODIFICAR");
-        Modificar.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        Modificar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
         javax.swing.GroupLayout BotonModificarLayout = new javax.swing.GroupLayout(BotonModificar);
         BotonModificar.setLayout(BotonModificarLayout);
@@ -666,7 +710,7 @@ public class Boleto extends javax.swing.JFrame {
         jPanel1.add(label, new org.netbeans.lib.awtextra.AbsoluteConstraints(870, 520, 200, 30));
 
         btnBuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Buscar.png"))); // NOI18N
-        btnBuscar.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        btnBuscar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnBuscar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnBuscarMouseClicked(evt);
@@ -774,7 +818,7 @@ public class Boleto extends javax.swing.JFrame {
         Cargar.setForeground(new java.awt.Color(255, 255, 255));
         Cargar.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         Cargar.setText("Buscar");
-        Cargar.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        Cargar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
         javax.swing.GroupLayout BotonCargarLayout = new javax.swing.GroupLayout(BotonCargar);
         BotonCargar.setLayout(BotonCargarLayout);
