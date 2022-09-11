@@ -5,9 +5,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -55,25 +52,59 @@ public class controller implements ActionListener, MouseListener{
         this.conductor = vC;
         this.rutes = vR;
         
+        
         //Inicio View
         vH.Boton_Entrar_Boletos.addMouseListener(this);
         vH.Boton_Entrar_Autobuses.addMouseListener(this);
         vH.Boton_Entrar_Rutas.addMouseListener(this);
         vH.Boton_Entrar_Conductores.addMouseListener(this);
         
+        //Menu Lateral
+        vH.BtnAutobus.addMouseListener(this);
+        vH.btnConductores.addMouseListener(this);
+        vH.BtnRutas.addMouseListener(this);
+        vH.BtnBoleto.addMouseListener(this);
+        
+        
         //Boletos View
+        
+        //Menu Lateral
         vB.btnInicio.addMouseListener(this);
+        vB.btnAutobus.addMouseListener(this);
+        vB.btnConductores.addMouseListener(this);
+        vB.btnRutas.addMouseListener(this);
+        
         vB.Modificar.addMouseListener(this);
         vB.Eliminar.addMouseListener(this);
         vB.GUARDAR.addMouseListener(this);
+        vB.TableBoletos.addMouseListener(this);
+        vB.Cargar.addMouseListener(this);
+        vB.btnCargar.addMouseListener(this);
+        vB.btnBuscar.addMouseListener(this);
+
         
         //Autobuses View
+        
+        //Menu Lateral
         vA.btnInicio.addMouseListener(this);
+        vA.btnConductores.addMouseListener(this);
+        vA.btnRutas.addMouseListener(this);
+        vA.btnBoletos.addMouseListener(this);
+        
         vA.Modificar.addMouseListener(this);
         vA.Eliminar.addMouseListener(this);
         vA.GUARDAR.addMouseListener(this);
         
+        
         //Rutes View
+        
+        //Menu Lateral
+        vR.btnInicio.addMouseListener(this);
+        vR.btnConductores.addMouseListener(this);
+        vR.btnAutobuses.addMouseListener(this);
+        vR.btnBoletos.addMouseListener(this);
+        
+        
         vR.Modificar.addMouseListener(this);
         vR.btnInicio.addMouseListener(this);
         vR.Eliminar.addMouseListener(this);
@@ -81,6 +112,13 @@ public class controller implements ActionListener, MouseListener{
         
         
         //Conductor View
+        
+        //Menu Lateral
+        vC.btnInicio.addMouseListener(this);
+        vC.btnRutas.addMouseListener(this);
+        vC.btnAutobuses.addMouseListener(this);
+        vC.btnBoletos.addMouseListener(this);
+        
         vC.btnInicio.addMouseListener(this);
         vC.Modificar.addMouseListener(this);
         vC.Eliminar.addMouseListener(this);
@@ -100,6 +138,9 @@ public class controller implements ActionListener, MouseListener{
         //=======================================
         //          Events Home View
         //========================================
+        
+
+        
         if(e.getSource() == Home.Boton_Entrar_Boletos){
             CargarBoletos();
             Home.setVisible(false);
@@ -124,11 +165,16 @@ public class controller implements ActionListener, MouseListener{
             conductor.setVisible(true);
         }
         
-               
         
         //==================================
         //    Events of Boletos View
-        //==================================
+        //==================================     
+        
+        //Menu
+        if(e.getSource() == Home.BtnAutobus){
+            
+        }
+        
         if(e.getSource() == Ticket.btnInicio){
             Ticket.setVisible(false);
             Home.setVisible(true);
@@ -146,6 +192,39 @@ public class controller implements ActionListener, MouseListener{
             CrearBoleto();
         }
         
+        if(e.getSource() == Ticket.TableBoletos){            
+            modelB.setTableBoletos(Ticket.TableBoletos);
+            modelB.setTxtCosto(Ticket.txtCosto);
+            modelB.setTxtID(Ticket.txtID);
+            modelB.setTxtNombre(Ticket.txtNombre);
+            modelB.setTextOrigen(Ticket.txtOrigen);
+            modelB.setTextDestino(Ticket.txtDestino);
+            modelB.setTextHora(Ticket.txtHorario);
+            modelB.setBoxAsientos(Ticket.BoxAsiento);
+            modelB.setTextLinea(Ticket.txtLinea);
+            modelB.setjDateFecha(Ticket.jDateFecha);
+            iniciarAsientos();
+            modelB.SeleccionarRegistroTable(e);
+        }
+        
+        if(e.getSource() == Ticket.Cargar){
+            modelB.setBoxAsientos(Ticket.BoxAsiento);
+            modelB.setOrigen(Ticket.Origen);
+            modelB.setDestino(Ticket.Destino);
+            modelB.setComboHorario(Ticket.ComboHorario);
+            iniciarAsientos();
+            modelB.setTextHora(Ticket.txtHorario);
+            modelB.setTextDestino(Ticket.txtDestino);
+            modelB.setTextOrigen(Ticket.txtOrigen);
+            modelB.setTextLinea(Ticket.txtLinea);
+            modelB.cargar();
+        }
+        
+        if(e.getSource() == Ticket.btnCargar){
+            iniciarAsientos();
+            modelB.setComboHorario(Ticket.ComboHorario);
+            BuscarRutas();
+        }
         
                
         //==================================
@@ -209,6 +288,7 @@ public class controller implements ActionListener, MouseListener{
         if(e.getSource() == conductor.GUARDAR){
             GuardarConductores();
         }
+        
                 
     }
     
@@ -320,32 +400,9 @@ public class controller implements ActionListener, MouseListener{
             //Model
             modelB.setDestino(Ticket.Destino);
             modelB.setOrigen(Ticket.Origen);
-            modelB.setAsientos(Ticket.BoxAsiento);
+            modelB.setBoxAsientos(Ticket.BoxAsiento);
             modelB.setComboHorario(Ticket.ComboHorario);
-            modelB.setAsiento1(Ticket.Asiento1);
-            modelB.setAsiento2(Ticket.Asiento2);
-            modelB.setAsiento3(Ticket.Asiento3);
-            modelB.setAsiento4(Ticket.Asiento4);
-            modelB.setAsiento5(Ticket.Asiento5);
-            modelB.setAsiento6(Ticket.Asiento6);
-            modelB.setAsiento7(Ticket.Asiento7);
-            modelB.setAsiento8(Ticket.Asiento8);
-            modelB.setAsiento9(Ticket.Asiento9);
-            modelB.setAsiento10(Ticket.Asiento10);
-            modelB.setAsiento11(Ticket.Asiento11);
-            modelB.setAsiento12(Ticket.Asiento12);
-            modelB.setAsiento13(Ticket.Asiento13);
-            modelB.setAsiento14(Ticket.Asiento14);
-            modelB.setAsiento15(Ticket.Asiento15);
-            modelB.setAsiento16(Ticket.Asiento16);
-            modelB.setAsiento17(Ticket.Asiento17);
-            modelB.setAsiento18(Ticket.Asiento18);
-            modelB.setAsiento19(Ticket.Asiento19);
-            modelB.setAsiento20(Ticket.Asiento20);
-            modelB.setAsiento21(Ticket.Asiento21);
-            modelB.setAsiento22(Ticket.Asiento22);
-            modelB.setAsiento23(Ticket.Asiento23);
-            modelB.setAsiento24(Ticket.Asiento24);
+            iniciarAsientos();
             modelB.setTextDestino(Ticket.txtDestino);
             modelB.setTextHora(Ticket.txtHorario);
             modelB.setTextOrigen(Ticket.txtOrigen);
@@ -359,7 +416,22 @@ public class controller implements ActionListener, MouseListener{
         }
     }
     
-    
+    public void BuscarRutas(){
+                if((Ticket.Destino.getSelectedItem().toString().equals("-- Destino --"))||
+           (Ticket.Origen.getSelectedItem().toString().equals("-- Origen --"))){
+            JOptionPane.showMessageDialog(null, "Selecciona un origen y un destino");
+        
+        }else{
+        Ticket.ComboHorario.removeAllItems();
+        
+        String origen = Ticket.Origen.getSelectedItem().toString();
+        String destino = Ticket.Destino.getSelectedItem().toString();
+        
+        //Model
+        modelB.BuscarRutas(origen, destino);
+        
+      }  
+    }
     //===========================
     //  Métodos Autobuses
     //===========================
@@ -728,6 +800,34 @@ public class controller implements ActionListener, MouseListener{
 
     @Override
     public void mouseExited(MouseEvent e) {
+    }
+    
+    
+    public void iniciarAsientos(){
+        modelB.setAsiento1(Ticket.Asiento1);
+        modelB.setAsiento2(Ticket.Asiento2);
+        modelB.setAsiento3(Ticket.Asiento3);
+        modelB.setAsiento4(Ticket.Asiento4);
+        modelB.setAsiento5(Ticket.Asiento5);
+        modelB.setAsiento6(Ticket.Asiento6);
+        modelB.setAsiento7(Ticket.Asiento7);
+        modelB.setAsiento8(Ticket.Asiento8);
+        modelB.setAsiento9(Ticket.Asiento9);
+        modelB.setAsiento10(Ticket.Asiento10);
+        modelB.setAsiento11(Ticket.Asiento11);
+        modelB.setAsiento12(Ticket.Asiento12);
+        modelB.setAsiento13(Ticket.Asiento13);
+        modelB.setAsiento14(Ticket.Asiento14);
+        modelB.setAsiento15(Ticket.Asiento15);
+        modelB.setAsiento16(Ticket.Asiento16);
+        modelB.setAsiento17(Ticket.Asiento17);
+        modelB.setAsiento18(Ticket.Asiento18);
+        modelB.setAsiento19(Ticket.Asiento19);
+        modelB.setAsiento20(Ticket.Asiento20);
+        modelB.setAsiento21(Ticket.Asiento21);
+        modelB.setAsiento22(Ticket.Asiento22);
+        modelB.setAsiento23(Ticket.Asiento23);
+        modelB.setAsiento24(Ticket.Asiento24);
     }
         
     //Code created by E.O

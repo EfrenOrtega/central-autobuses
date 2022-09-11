@@ -3,10 +3,12 @@ package model;
 import com.toedter.calendar.JCalendar;
 import com.toedter.calendar.JDateChooser;
 import controller.controller;
+import java.awt.event.MouseEvent;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -14,19 +16,15 @@ import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
 import javax.swing.JTextField;
 
 
-        /*String origen = txtOrigen.getText();
-        String destino = txtDestino.getText();
-        String hora = txtHorario.getText();
-
-        String formato = jDateFecha.getDateFormatString();
-        Date date = jDateFecha.getDate();
-        SimpleDateFormat sdf = new SimpleDateFormat(formato);
-        String Fsalida = String.valueOf(sdf.format(date));
-
-        String Linea = txtLinea.getText();*/
+        /*
+            txtID.setText(String.valueOf(TableBoletos.getValueAt(registro, 0)));
+        txtNombre.setText(String.valueOf(TableBoletos.getValueAt(registro, 1)));
+        txtCosto
+        */
 public class modelBoletos {
 
     private JTextField textOrigen;
@@ -34,6 +32,10 @@ public class modelBoletos {
     private JTextField textHora;
     private JTextField textLinea;
     private JDateChooser jDateFecha;
+    private JTable TableBoletos;
+    private JTextField txtID;
+    private JTextField txtNombre;
+    private JTextField txtCosto;
 
     private JComboBox Destino;
     private JComboBox Origen;
@@ -97,7 +99,54 @@ public class modelBoletos {
     public void setTextLinea(JTextField textLinea) {
         this.textLinea = textLinea;
     }
-    
+
+    public JTable getTableBoletos() {
+        return TableBoletos;
+    }
+
+    public void setTableBoletos(JTable TableBoletos) {
+        this.TableBoletos = TableBoletos;
+    }
+
+    public JTextField getTxtID() {
+        return txtID;
+    }
+
+    public void setTxtID(JTextField txtID) {
+        this.txtID = txtID;
+    }
+
+    public JTextField getTxtNombre() {
+        return txtNombre;
+    }
+
+    public void setTxtNombre(JTextField txtNombre) {
+        this.txtNombre = txtNombre;
+    }
+
+    public JTextField getTxtCosto() {
+        return txtCosto;
+    }
+
+    public void setTxtCosto(JTextField txtCosto) {
+        this.txtCosto = txtCosto;
+    }
+
+    public JDateChooser getjDateFecha() {
+        return jDateFecha;
+    }
+
+    public void setjDateFecha(JDateChooser jDateFecha) {
+        this.jDateFecha = jDateFecha;
+    }
+
+    public JComboBox getBoxAsientos() {
+        return BoxAsientos;
+    }
+
+    public void setBoxAsientos(JComboBox BoxAsientos) {
+        this.BoxAsientos = BoxAsientos;
+    }   
     
     
     public JLabel getAsiento1() {
@@ -300,14 +349,6 @@ public class modelBoletos {
         this.ComboHorario = ComboHorario;
     }
 
-    public JComboBox getAsientos() {
-        return BoxAsientos;
-    }
-
-    public void setAsientos(JComboBox Asientos) {
-        this.BoxAsientos = Asientos;
-    }
-
     public JComboBox getDestino() {
         return Destino;
     }
@@ -409,7 +450,8 @@ public class modelBoletos {
             ps.executeUpdate();
             //actualizarTabla();
             //limpiarcajasTexto();
-            //inicializarAsientos();
+            this.inicializarAsientos();
+            this.AsientoDisponibles();
             JOptionPane.showMessageDialog(null, "Registro Eliminado");
             return true;
         } catch (SQLException e) {
@@ -458,10 +500,9 @@ public class modelBoletos {
     public void cargar() {
         this.BoxAsientos.removeAllItems();
         //limpiarcajasTexto();
-        String origen = Origen.getSelectedItem().toString();
-        String destino = Destino.getSelectedItem().toString();
-        String hora = ComboHorario.getSelectedItem().toString();
-
+        String origen = this.Origen.getSelectedItem().toString();
+        String destino = this.Destino.getSelectedItem().toString();
+        String hora = this.ComboHorario.getSelectedItem().toString();
         PreparedStatement ps;
         String sql;
 
@@ -479,6 +520,7 @@ public class modelBoletos {
                 if (rs.getRow() > 0) {
                     rs = ps.executeQuery();
                     inicializarAsientos();
+                    
                     llenarFormulaio();
                     int x = 0;
                     ArrayList<String> AsientosDisponibles = new ArrayList<String>();
@@ -490,56 +532,56 @@ public class modelBoletos {
                         String Asientos = rs.getString("Asiento");
                         int Asiento = Integer.parseInt(Asientos);
                         if (Asiento < 12) {
-                            if (Asiento == 1) {
-                                Asiento1.setIcon(new ImageIcon("Asientos/Asiento 1 Rojo.png"));
+                            if (Asiento == 1) {                                
+                                Asiento1.setIcon(new ImageIcon("build/classes/img/Asientos/Asiento 1 Rojo.png"));
                             } else if (Asiento == 2) {
-                                Asiento2.setIcon(new ImageIcon("Asientos/Asiento 2 Rojo.png"));
+                                Asiento2.setIcon(new ImageIcon("build/classes/img/Asientos/Asiento 2 Rojo.png"));
                             } else if (Asiento == 3) {
-                                Asiento3.setIcon(new ImageIcon("Asientos/Asiento 3 Rojo.png"));
+                                Asiento3.setIcon(new ImageIcon("build/classes/img/Asientos/Asiento 3 Rojo.png"));
                             } else if (Asiento == 4) {
-                                Asiento4.setIcon(new ImageIcon("Asientos/Asiento 4 Rojo.png"));
+                                Asiento4.setIcon(new ImageIcon("build/classes/img/Asientos/Asiento 4 Rojo.png"));
                             } else if (Asiento == 5) {
-                                Asiento5.setIcon(new ImageIcon("Asientos/Asiento 5 Rojo.png"));
+                                Asiento5.setIcon(new ImageIcon("build/classes/img/Asientos/Asiento 5 Rojo.png"));
                             } else if (Asiento == 6) {
-                                Asiento6.setIcon(new ImageIcon("Asientos/Asiento 6 Rojo.png"));
+                                Asiento6.setIcon(new ImageIcon("build/classes/img/Asientos/Asiento 6 Rojo.png"));
                             } else if (Asiento == 7) {
-                                Asiento7.setIcon(new ImageIcon("Asientos/Asiento 7 Rojo.png"));
+                                Asiento7.setIcon(new ImageIcon("build/classes/img/Asientos/Asiento 7 Rojo.png"));
                             } else if (Asiento == 8) {
-                                Asiento8.setIcon(new ImageIcon("Asientos/Asiento 8 Rojo.png"));
+                                Asiento8.setIcon(new ImageIcon("build/classes/img/Asientos/Asiento 8 Rojo.png"));
                             } else if (Asiento == 9) {
-                                Asiento9.setIcon(new ImageIcon("Asientos/Asiento 9 Rojo.png"));
+                                Asiento9.setIcon(new ImageIcon("build/classes/img/Asientos/Asiento 9 Rojo.png"));
                             } else if (Asiento == 10) {
-                                Asiento10.setIcon(new ImageIcon("Asientos/Asiento 10 Rojo.png"));
+                                Asiento10.setIcon(new ImageIcon("build/classes/img/Asientos/Asiento 10 Rojo.png"));
                             } else if (Asiento == 11) {
-                                Asiento11.setIcon(new ImageIcon("Asientos/Asiento 11 Rojo.png"));
+                                Asiento11.setIcon(new ImageIcon("build/classes/img/Asientos/Asiento 11 Rojo.png"));
                             }
                         } else if (Asiento >= 12) {
                             if (Asiento == 12) {
-                                Asiento12.setIcon(new ImageIcon("Asientos/Asiento 12 Rojo.png"));
+                                Asiento12.setIcon(new ImageIcon("build/classes/img/Asientos/Asiento 12 Rojo.png"));
                             } else if (Asiento == 13) {
-                                Asiento13.setIcon(new ImageIcon("Asientos/Asiento 13 Rojo.png"));
+                                Asiento13.setIcon(new ImageIcon("build/classes/img/Asientos/Asiento 13 Rojo.png"));
                             } else if (Asiento == 14) {
-                                Asiento14.setIcon(new ImageIcon("Asientos/Asiento 14 Rojo.png"));
+                                Asiento14.setIcon(new ImageIcon("build/classes/img/Asientos/Asiento 14 Rojo.png"));
                             } else if (Asiento == 15) {
-                                Asiento15.setIcon(new ImageIcon("Asientos/Asiento 15 Rojo.png"));
+                                Asiento15.setIcon(new ImageIcon("build/classes/img/Asientos/Asiento 15 Rojo.png"));
                             } else if (Asiento == 16) {
-                                Asiento16.setIcon(new ImageIcon("Asientos/Asiento 16 Rojo.png"));
+                                Asiento16.setIcon(new ImageIcon("build/classes/img/Asientos/Asiento 16 Rojo.png"));
                             } else if (Asiento == 17) {
-                                Asiento17.setIcon(new ImageIcon("Asientos/Asiento 17 Rojo.png"));
+                                Asiento17.setIcon(new ImageIcon("build/classes/img/Asientos/Asiento 17 Rojo.png"));
                             } else if (Asiento == 18) {
-                                Asiento18.setIcon(new ImageIcon("Asientos/Asiento 18 Rojo.png"));
+                                Asiento18.setIcon(new ImageIcon("build/classes/img/Asientos/Asiento 18 Rojo.png"));
                             } else if (Asiento == 19) {
-                                Asiento19.setIcon(new ImageIcon("Asientos/Asiento 19 Rojo.png"));
+                                Asiento19.setIcon(new ImageIcon("build/classes/img/Asientos/Asiento 19 Rojo.png"));
                             } else if (Asiento == 20) {
-                                Asiento20.setIcon(new ImageIcon("Asientos/Asiento 20 Rojo.png"));
+                                Asiento20.setIcon(new ImageIcon("build/classes/img/Asientos/Asiento 20 Rojo.png"));
                             } else if (Asiento == 21) {
-                                Asiento21.setIcon(new ImageIcon("Asientos/Asiento 21 Rojo.png"));
+                                Asiento21.setIcon(new ImageIcon("build/classes/img/Asientos/Asiento 21 Rojo.png"));
                             } else if (Asiento == 22) {
-                                Asiento22.setIcon(new ImageIcon("Asientos/Asiento 22 Rojo.png"));
+                                Asiento22.setIcon(new ImageIcon("build/classes/img/Asientos/Asiento 22 Rojo.png"));
                             } else if (Asiento == 23) {
-                                Asiento23.setIcon(new ImageIcon("Asientos/Asiento 23 Rojo.png"));
+                                Asiento23.setIcon(new ImageIcon("build/classes/img/Asientos/Asiento 23 Rojo.png"));
                             } else if (Asiento == 24) {
-                                Asiento24.setIcon(new ImageIcon("Asientos/Asiento 24 Rojo.png"));
+                                Asiento24.setIcon(new ImageIcon("build/classes/img/Asientos/Asiento 24 Rojo.png"));
                             }
                         }
 
@@ -754,4 +796,64 @@ public class modelBoletos {
 
     }
 
+    public void SeleccionarRegistroTable(MouseEvent evt) {
+        int registro = TableBoletos.rowAtPoint(evt.getPoint());
+        txtID.setText(String.valueOf(TableBoletos.getValueAt(registro, 0)));
+        txtNombre.setText(String.valueOf(TableBoletos.getValueAt(registro, 1)));
+        txtCosto.setText(String.valueOf(TableBoletos.getValueAt(registro, 2)));
+        //BoxAsiento(String.valueOf(TableBoletos.getValueAt(registro, 3)));
+
+        AsientoDisponible = String.valueOf(TableBoletos.getValueAt(registro, 3));
+
+        this.textOrigen.setText(String.valueOf(TableBoletos.getValueAt(registro, 4)));
+        this.textDestino.setText(String.valueOf(TableBoletos.getValueAt(registro, 5)));
+        this.textHora.setText(String.valueOf(TableBoletos.getValueAt(registro, 6)));
+        this.textLinea.setText(String.valueOf(TableBoletos.getValueAt(registro, 7)));
+
+        SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
+        String fecha;
+        fecha = TableBoletos.getValueAt(TableBoletos.getSelectedRow(), 8).toString().trim();
+        Date fechaDate = null;
+        try {
+            fechaDate = formato.parse(fecha);
+        } catch (ParseException ex) {
+            ex.printStackTrace();
+        }
+        jDateFecha.setDate(fechaDate);
+
+        AsientoDisponibles();
+        this.BoxAsientos.setSelectedItem(AsientoDisponible);
+    }
+
+    public void BuscarRutas(String origen, String destino){
+        PreparedStatement ps;
+        String sql;
+
+        try {
+            sql = "SELECT HoraSalida, Destino, Origen, Linea FROM rutas AS Rut "
+                    + "INNER JOIN autobuses AS Aut ON Rut.AutobusAsignado = Aut.Id_autobus  "
+                    + "WHERE Origen=? and Destino=? and Fecha = CURDATE()";
+            ps = con.prepareStatement(sql);
+            ps.setString(1, origen);
+            ps.setString(2, destino);
+
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                if (rs.getRow() > 0) {
+                    rs = ps.executeQuery();
+                    inicializarAsientos();
+                    while (rs.next()) {
+                        String DBHorario = rs.getString("HoraSalida");
+                        ComboHorario.addItem(DBHorario);
+
+                    }
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "No existe esta ruta");
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error de conexión: 1" + e.getMessage());
+        }
+    }
 }

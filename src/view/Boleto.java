@@ -580,7 +580,7 @@ public class Boleto extends javax.swing.JFrame {
         BotonCargar = new javax.swing.JPanel();
         Cargar = new javax.swing.JLabel();
         ComboHorario = new javax.swing.JComboBox<>();
-        btoCargar = new javax.swing.JLabel();
+        btnCargar = new javax.swing.JLabel();
         txtHorario = new javax.swing.JTextField();
         jLabel25 = new javax.swing.JLabel();
 
@@ -623,11 +623,6 @@ public class Boleto extends javax.swing.JFrame {
         btnAutobus.setForeground(new java.awt.Color(255, 255, 255));
         btnAutobus.setText("Autobuses");
         btnAutobus.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        btnAutobus.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnAutobusMouseClicked(evt);
-            }
-        });
         jPanelMenu.add(btnAutobus, new org.netbeans.lib.awtextra.AbsoluteConstraints(94, 345, -1, -1));
 
         jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Bus.png"))); // NOI18N
@@ -777,11 +772,6 @@ public class Boleto extends javax.swing.JFrame {
         GUARDAR.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         GUARDAR.setText("GUARDAR");
         GUARDAR.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        GUARDAR.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                GUARDARMouseClicked(evt);
-            }
-        });
 
         javax.swing.GroupLayout BotonGuardarLayout = new javax.swing.GroupLayout(BotonGuardar);
         BotonGuardar.setLayout(BotonGuardarLayout);
@@ -860,11 +850,6 @@ public class Boleto extends javax.swing.JFrame {
             }
         ));
         TableBoletos.setRowHeight(23);
-        TableBoletos.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                TableBoletosMouseClicked(evt);
-            }
-        });
         jScrollPane1.setViewportView(TableBoletos);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -1004,11 +989,6 @@ public class Boleto extends javax.swing.JFrame {
         Cargar.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         Cargar.setText("Buscar");
         Cargar.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        Cargar.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                CargarMouseClicked(evt);
-            }
-        });
 
         javax.swing.GroupLayout BotonCargarLayout = new javax.swing.GroupLayout(BotonCargar);
         BotonCargar.setLayout(BotonCargarLayout);
@@ -1032,13 +1012,8 @@ public class Boleto extends javax.swing.JFrame {
         });
         jPanel1.add(ComboHorario, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 140, 140, 30));
 
-        btoCargar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Recargar.png"))); // NOI18N
-        btoCargar.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btoCargarMouseClicked(evt);
-            }
-        });
-        jPanel1.add(btoCargar, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 80, -1, -1));
+        btnCargar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Recargar.png"))); // NOI18N
+        jPanel1.add(btnCargar, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 80, -1, -1));
 
         txtHorario.setBorder(null);
         jPanel1.add(txtHorario, new org.netbeans.lib.awtextra.AbsoluteConstraints(697, 378, 100, 25));
@@ -1062,74 +1037,6 @@ public class Boleto extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnAutobusMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAutobusMouseClicked
-        Autobuses Bus = new Autobuses();
-        this.setVisible(false);
-        Bus.setVisible(true);
-    }//GEN-LAST:event_btnAutobusMouseClicked
-
-    private void GUARDARMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_GUARDARMouseClicked
-        
-        System.out.print(jDateFecha.getDate());
-        if(!txtNombre.getText().equals("")&&!txtCosto.getText().equals("")&&
-            !txtOrigen.getText().equals("")&&!txtDestino.getText().equals("")&&
-            !txtHorario.getText().equals("")&&!txtLinea.getText().equals("")&&
-            (jDateFecha.getDate() != null)){
-        
-        String nombre = txtNombre.getText();
-        Float costo = Float.parseFloat(txtCosto.getText());
-        int Asiento= Integer.parseInt(BoxAsiento.getSelectedItem().toString());
-        String Origen = txtOrigen.getText();
-        String Destino = txtDestino.getText();
-        String Horario= txtHorario.getText();
-        String Linea = txtLinea.getText();
-        
-        String formato = jDateFecha.getDateFormatString();        
-        Date date=jDateFecha.getDate();        
-        SimpleDateFormat sdf = new SimpleDateFormat(formato);
-        String Fsalida = String.valueOf(sdf.format(date));
-        
-        PreparedStatement ps;
-        String sql;
-
-        try{
-            sql = "INSERT INTO Boletos(Nombre, Costo, Asiento, Origen, Destino, Hora, Linea, "
-            + "Fecha) values(?,?,?,?,?,?,?,?)";
-            ps = con.prepareStatement(sql);
-            ps.setString(1, nombre);
-            ps.setFloat(2, costo);
-            ps.setInt(3, Asiento);
-            ps.setString(4, Origen);
-            ps.setString(5, Destino);
-            ps.setString(6, Horario);
-            ps.setString(7, Linea);
-            ps.setString(8, Fsalida);
-            ps.executeUpdate();
-
-            if((!this.Destino.getSelectedItem().toString().equals("-- Destino --"))||
-               (!this.Origen.getSelectedItem().toString().equals("-- Origen --"))){
-               cargar();
-            }else{
-                 AsientoDisponible = BoxAsiento.getSelectedItem().toString();
-                 AsientoDisponibles();
-            }
-
-            limpiarcajasTexto();
-            actualizarTabla();
-            JOptionPane.showMessageDialog(null, "Registro nuevo agregado");
-
-        }catch(SQLException e){
-            JOptionPane.showMessageDialog(null, "Error de conexión:" + e.getMessage());
-        }
-        }else{
-            JOptionPane.showMessageDialog(null, "Llena todos los campos");
-        }  
-    }//GEN-LAST:event_GUARDARMouseClicked
-
-    private void CargarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_CargarMouseClicked
-        cargar();
-    }//GEN-LAST:event_CargarMouseClicked
-
     private void btnRutasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnRutasMouseClicked
         Rutas Rut = new Rutas();
         this.setVisible(false);
@@ -1146,79 +1053,6 @@ public class Boleto extends javax.swing.JFrame {
 
     private void OrigenItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_OrigenItemStateChanged
     }//GEN-LAST:event_OrigenItemStateChanged
-
-    private void btoCargarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btoCargarMouseClicked
-        if((Destino.getSelectedItem().toString().equals("-- Destino --"))||
-           (Origen.getSelectedItem().toString().equals("-- Origen --"))){
-            JOptionPane.showMessageDialog(null, "Selecciona un origen y un destino");
-        
-        }else{
-        ComboHorario.removeAllItems();
-        
-        String origen = Origen.getSelectedItem().toString();
-        String destino = Destino.getSelectedItem().toString();
-        PreparedStatement ps;
-        String sql;
-        
-        
-        try{
-            sql="SELECT HoraSalida, Destino, Origen, Linea FROM rutas AS Rut "
-                    + "INNER JOIN autobuses AS Aut ON Rut.AutobusAsignado = Aut.Id_autobus  "
-                    + "WHERE Origen=? and Destino=? and Fecha = CURDATE()";
-            ps = con.prepareStatement(sql);
-            ps.setString(1, origen);
-            ps.setString(2, destino);
-            
-            ResultSet rs=ps.executeQuery();  
-                
-            if(rs.next()){
-                if(rs.getRow() > 0){
-                    rs=ps.executeQuery();  
-                    inicializarAsientos();
-                    while(rs.next()){
-                        String DBHorario=rs.getString("HoraSalida");
-                        ComboHorario.addItem(DBHorario);
-
-                    }                      
-                }
-            }else{
-                JOptionPane.showMessageDialog(null, "No existe esta ruta");
-            }
-        }catch(SQLException e){
-            JOptionPane.showMessageDialog(null, "Error de conexión: 1" + e.getMessage());
-        }    
-      }        
-    }//GEN-LAST:event_btoCargarMouseClicked
-
-    private void TableBoletosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TableBoletosMouseClicked
-        int registro = TableBoletos.rowAtPoint(evt.getPoint());
-        txtID.setText(String.valueOf(TableBoletos.getValueAt(registro, 0)));
-        txtNombre.setText(String.valueOf(TableBoletos.getValueAt(registro, 1)));
-        txtCosto.setText(String.valueOf(TableBoletos.getValueAt(registro, 2)));
-        //BoxAsiento(String.valueOf(TableBoletos.getValueAt(registro, 3)));
-        
-        AsientoDisponible = String.valueOf(TableBoletos.getValueAt(registro, 3));
-        
-        txtOrigen.setText(String.valueOf(TableBoletos.getValueAt(registro, 4)));
-        txtDestino.setText(String.valueOf(TableBoletos.getValueAt(registro, 5)));
-        txtHorario.setText(String.valueOf(TableBoletos.getValueAt(registro, 6)));
-        txtLinea.setText(String.valueOf(TableBoletos.getValueAt(registro, 7)));
-                      
-        SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
-        String fecha;
-        fecha = TableBoletos.getValueAt(TableBoletos.getSelectedRow(),8).toString().trim();
-        Date fechaDate=null;
-        try {                 
-            fechaDate = formato.parse(fecha);
-        } catch (ParseException ex) {
-            ex.printStackTrace();
-        }
-        jDateFecha.setDate(fechaDate);
-        
-        AsientoDisponibles();
-        BoxAsiento.setSelectedItem(AsientoDisponible);
-
-    }//GEN-LAST:event_TableBoletosMouseClicked
 
     private void btnBuscarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBuscarMouseClicked
     
@@ -1368,12 +1202,12 @@ public class Boleto extends javax.swing.JFrame {
     public javax.swing.JTable TableBoletos;
     private javax.swing.JLabel Volante;
     private javax.swing.JLabel VolanteRojo;
-    private javax.swing.JLabel btnAutobus;
+    public javax.swing.JLabel btnAutobus;
     public javax.swing.JLabel btnBuscar;
-    private javax.swing.JLabel btnConductores;
+    public javax.swing.JLabel btnCargar;
+    public javax.swing.JLabel btnConductores;
     public javax.swing.JLabel btnInicio;
-    private javax.swing.JLabel btnRutas;
-    public javax.swing.JLabel btoCargar;
+    public javax.swing.JLabel btnRutas;
     public com.toedter.calendar.JDateChooser jDateFecha;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;

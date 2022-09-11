@@ -133,11 +133,11 @@ public class Autobuses extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
+        btnBoletos = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
-        jLabel9 = new javax.swing.JLabel();
+        btnRutas = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
-        jLabel11 = new javax.swing.JLabel();
+        btnConductores = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         Asientos = new javax.swing.JLabel();
@@ -221,16 +221,11 @@ public class Autobuses extends javax.swing.JFrame {
         jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Bus.png"))); // NOI18N
         jPanelMenu.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(41, 334, -1, -1));
 
-        jLabel6.setFont(new java.awt.Font("Roboto Medium", 0, 16)); // NOI18N
-        jLabel6.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel6.setText("Boletos");
-        jLabel6.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        jLabel6.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel6MouseClicked(evt);
-            }
-        });
-        jPanelMenu.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(94, 265, 90, 30));
+        btnBoletos.setFont(new java.awt.Font("Roboto Medium", 0, 16)); // NOI18N
+        btnBoletos.setForeground(new java.awt.Color(255, 255, 255));
+        btnBoletos.setText("Boletos");
+        btnBoletos.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        jPanelMenu.add(btnBoletos, new org.netbeans.lib.awtextra.AbsoluteConstraints(94, 265, 90, 30));
 
         jPanel4.setBackground(new java.awt.Color(42, 69, 114));
         jPanel4.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(54, 87, 136), 30, true));
@@ -238,30 +233,30 @@ public class Autobuses extends javax.swing.JFrame {
         jPanel4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
         jPanelMenu.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(86, 339, 98, 30));
 
-        jLabel9.setFont(new java.awt.Font("Roboto Medium", 0, 16)); // NOI18N
-        jLabel9.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel9.setText("Rutas");
-        jLabel9.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        jLabel9.addMouseListener(new java.awt.event.MouseAdapter() {
+        btnRutas.setFont(new java.awt.Font("Roboto Medium", 0, 16)); // NOI18N
+        btnRutas.setForeground(new java.awt.Color(255, 255, 255));
+        btnRutas.setText("Rutas");
+        btnRutas.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        btnRutas.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel9MouseClicked(evt);
+                btnRutasMouseClicked(evt);
             }
         });
-        jPanelMenu.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(92, 425, -1, -1));
+        jPanelMenu.add(btnRutas, new org.netbeans.lib.awtextra.AbsoluteConstraints(92, 425, -1, -1));
 
         jLabel10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Rutas.png"))); // NOI18N
         jPanelMenu.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(41, 414, -1, -1));
 
-        jLabel11.setFont(new java.awt.Font("Roboto Medium", 0, 16)); // NOI18N
-        jLabel11.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel11.setText("Conductores");
-        jLabel11.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        jLabel11.addMouseListener(new java.awt.event.MouseAdapter() {
+        btnConductores.setFont(new java.awt.Font("Roboto Medium", 0, 16)); // NOI18N
+        btnConductores.setForeground(new java.awt.Color(255, 255, 255));
+        btnConductores.setText("Conductores");
+        btnConductores.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        btnConductores.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel11MouseClicked(evt);
+                btnConductoresMouseClicked(evt);
             }
         });
-        jPanelMenu.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(92, 500, -1, -1));
+        jPanelMenu.add(btnConductores, new org.netbeans.lib.awtextra.AbsoluteConstraints(92, 500, -1, -1));
 
         jLabel12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Conductor.png"))); // NOI18N
         jPanelMenu.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(41, 489, -1, -1));
@@ -502,21 +497,15 @@ public class Autobuses extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jLabel6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel6MouseClicked
-        Boleto Ticket = new Boleto();
-        this.setVisible(false);
-        Ticket.setVisible(true);
-    }//GEN-LAST:event_jLabel6MouseClicked
-
-    private void jLabel9MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel9MouseClicked
+    private void btnRutasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnRutasMouseClicked
         Rutas Rut = new Rutas();
         this.setVisible(false);
-        Rut.setVisible(true);    }//GEN-LAST:event_jLabel9MouseClicked
+        Rut.setVisible(true);    }//GEN-LAST:event_btnRutasMouseClicked
 
-    private void jLabel11MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel11MouseClicked
+    private void btnConductoresMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnConductoresMouseClicked
         Conductores Chofer = new Conductores();
         this.setVisible(false);
-        Chofer.setVisible(true);    }//GEN-LAST:event_jLabel11MouseClicked
+        Chofer.setVisible(true);    }//GEN-LAST:event_btnConductoresMouseClicked
 
     private void tablaBusMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaBusMouseClicked
         int registro = tablaBus.rowAtPoint(evt.getPoint());
@@ -645,11 +634,13 @@ public class Autobuses extends javax.swing.JFrame {
     public javax.swing.JLabel Eliminar;
     public javax.swing.JLabel GUARDAR;
     public javax.swing.JLabel Modificar;
+    public javax.swing.JLabel btnBoletos;
     public javax.swing.JLabel btnBuscar;
+    public javax.swing.JLabel btnConductores;
     public javax.swing.JLabel btnInicio;
+    public javax.swing.JLabel btnRutas;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
@@ -664,10 +655,8 @@ public class Autobuses extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel24;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JLabel jLabelAño;
     private javax.swing.JLabel jLabelDestino;
     private javax.swing.JLabel jLabelHorario;
