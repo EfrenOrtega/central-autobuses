@@ -13,7 +13,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.text.ParseException;
 import javax.swing.JOptionPane;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -33,11 +32,7 @@ import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
  * @author Efren
  */
 public class Boleto extends javax.swing.JFrame {
-
-    /**
-     * Creates new form Boleto
-     */
-    
+   
     ConexionMySQL cn = new ConexionMySQL();    
     Connection con = cn.getConexion();    
     String AsientoDisponible;   
@@ -67,205 +62,6 @@ public class Boleto extends javax.swing.JFrame {
         Asiento22.setIcon(new ImageIcon("build/classes/img/Asientos/Asiento 22.png"));
         Asiento23.setIcon(new ImageIcon("build/classes/img/Asientos/Asiento 23.png"));
         Asiento24.setIcon(new ImageIcon("build/classes/img/Asientos/Asiento 24.png"));                        
-    }
-    
-    public void cargar(){
-        BoxAsiento.removeAllItems();
-        limpiarcajasTexto();
-        String origen = Origen.getSelectedItem().toString();
-        String destino = Destino.getSelectedItem().toString();
-        String hora = ComboHorario.getSelectedItem().toString();
-        
-        PreparedStatement ps;
-        String sql;
-
-        try{
-            sql="SELECT Asiento FROM boletos WHERE Origen=? and Destino=? and Hora=? and Fecha = CURDATE()";
-            ps = con.prepareStatement(sql);
-            ps.setString(1, origen);
-            ps.setString(2, destino);
-            ps.setString(3, hora);
-
-            ResultSet rs=ps.executeQuery();  
-
-            if(rs.next()){
-                BoxAsiento.removeAllItems();
-                if(rs.getRow() > 0){
-                    rs=ps.executeQuery();  
-                    inicializarAsientos();
-                    llenarFormulaio();
-                    int x=0;
-                    ArrayList<String> AsientosDisponibles = new ArrayList<String>();
-                    for (int i=1; i<=24; i++){
-                        AsientosDisponibles.add(String.valueOf(i)); 
-                    }                   
-
-                    while(rs.next()){
-                        String Asientos=rs.getString("Asiento");
-                        int Asiento = Integer.parseInt(Asientos);
-                        if(Asiento < 12){
-                            if(Asiento == 1){
-                                Asiento1.setIcon(new ImageIcon("Asientos/Asiento 1 Rojo.png"));                                
-                            }else if(Asiento == 2){
-                                Asiento2.setIcon(new ImageIcon("Asientos/Asiento 2 Rojo.png"));
-                            }else if(Asiento==3){
-                                Asiento3.setIcon(new ImageIcon("Asientos/Asiento 3 Rojo.png"));
-                            }else if(Asiento==4){
-                                Asiento4.setIcon(new ImageIcon("Asientos/Asiento 4 Rojo.png"));                                
-                            }else if(Asiento == 5){
-                                Asiento5.setIcon(new ImageIcon("Asientos/Asiento 5 Rojo.png"));
-                            }else if(Asiento==6){
-                                Asiento6.setIcon(new ImageIcon("Asientos/Asiento 6 Rojo.png"));
-                            }else if(Asiento==7){
-                                Asiento7.setIcon(new ImageIcon("Asientos/Asiento 7 Rojo.png"));
-                            }else if(Asiento == 8){
-                                Asiento8.setIcon(new ImageIcon("Asientos/Asiento 8 Rojo.png"));
-                            }else if(Asiento == 9){
-                                Asiento9.setIcon(new ImageIcon("Asientos/Asiento 9 Rojo.png"));
-                            }else if(Asiento == 10){
-                                Asiento10.setIcon(new ImageIcon("Asientos/Asiento 10 Rojo.png"));
-                            }else if(Asiento == 11){
-                                Asiento11.setIcon(new ImageIcon("Asientos/Asiento 11 Rojo.png"));
-                            }
-                        }else if(Asiento >= 12){    
-                            if(Asiento == 12){
-                                Asiento12.setIcon(new ImageIcon("Asientos/Asiento 12 Rojo.png"));
-                            }else if(Asiento == 13){
-                                Asiento13.setIcon(new ImageIcon("Asientos/Asiento 13 Rojo.png"));
-                            }else if(Asiento == 14){
-                                Asiento14.setIcon(new ImageIcon("Asientos/Asiento 14 Rojo.png"));
-                            }else if(Asiento == 15){
-                                Asiento15.setIcon(new ImageIcon("Asientos/Asiento 15 Rojo.png"));
-                            }else if(Asiento == 16){
-                                Asiento16.setIcon(new ImageIcon("Asientos/Asiento 16 Rojo.png"));
-                            }else  if(Asiento == 17){
-                                Asiento17.setIcon(new ImageIcon("Asientos/Asiento 17 Rojo.png"));
-                            }else if(Asiento == 18){
-                                Asiento18.setIcon(new ImageIcon("Asientos/Asiento 18 Rojo.png"));
-                            }else if(Asiento == 19){
-                                Asiento19.setIcon(new ImageIcon("Asientos/Asiento 19 Rojo.png"));
-                            }else if(Asiento == 20){
-                                Asiento20.setIcon(new ImageIcon("Asientos/Asiento 20 Rojo.png"));
-                            }else if(Asiento == 21){
-                                Asiento21.setIcon(new ImageIcon("Asientos/Asiento 21 Rojo.png"));
-                            }else if(Asiento == 22){
-                                Asiento22.setIcon(new ImageIcon("Asientos/Asiento 22 Rojo.png"));
-                            }else if(Asiento == 23){
-                                Asiento23.setIcon(new ImageIcon("Asientos/Asiento 23 Rojo.png"));
-                            }else if(Asiento == 24){
-                                Asiento24.setIcon(new ImageIcon("Asientos/Asiento 24 Rojo.png"));
-                            }
-                        }
-                    
-                        AsientosDisponibles.remove(Asientos);
-                        x++;               
-                    }
-                    String[] miarray = new String[AsientosDisponibles.size()];
-                    miarray = AsientosDisponibles.toArray(miarray);
-                    for(String s : miarray)
-                      BoxAsiento.addItem(s);
-                    }
-
-            }else{
-                for(int i=1; i<=24; i++){
-                    BoxAsiento.addItem(String.valueOf(i));
-                }
-                inicializarAsientos();
-                limpiarcajasTexto();
-                llenarFormulaio();
-
-            }
-        }catch(SQLException e){
-            JOptionPane.showMessageDialog(null, "Error de conexión: " + e.getMessage());
-        }   
-    }
-    
-    public String horaActual(){
-        SimpleDateFormat dtf = new SimpleDateFormat("yyyy-MM-dd");
-        Calendar calendar = Calendar.getInstance();
-
-        Date dateObj = calendar.getTime();
-        String formattedDate = dtf.format(dateObj);
-    
-        
-        return formattedDate;
-    }
-    
-    public void llenarComboBoxOrigenDestino(){
-        PreparedStatement ps;
-        String sql;
-        
-        String HoraActual = horaActual();
-        
-        try{
-            sql="SELECT Origen, Destino FROM rutas WHERE Fecha = ?";
-            ps = con.prepareStatement(sql);
-            ps.setString(1, HoraActual);
-            ResultSet rs=ps.executeQuery();  
-                
-            if(rs.next()){
-                if(rs.getRow() > 0){
-                    rs=ps.executeQuery();  
-                    inicializarAsientos();
-                    while(rs.next()){
-                        String DBOrigen=rs.getString("Origen");
-                        String DBDestino=rs.getString("Destino");
-                        Origen.addItem(DBOrigen);
-                        Destino.addItem(DBDestino);
-                    }                      
-                }
-            }else{
-                System.out.print("No hay Rutas Actuales\n");
-            }
-        }catch(SQLException e){
-            JOptionPane.showMessageDialog(null, "Error de conexión:" + e.getMessage());
-            System.out.print("Hola");
-        }   
-        
-        AutoCompleteDecorator.decorate(Destino);
-        AutoCompleteDecorator.decorate(Origen);
-    }
-    
-    public void llenarFormulaio(){
-                
-        String origen = Origen.getSelectedItem().toString();
-        String destino = Destino.getSelectedItem().toString();
-        String horaSalida = ComboHorario.getSelectedItem().toString();
-        PreparedStatement ps;
-        String sql;
-        try{
-            sql="SELECT HoraSalida, Destino, Origen, Linea FROM rutas AS Rut "
-                    + "INNER JOIN autobuses AS Aut ON Rut.AutobusAsignado = Aut.Id_autobus  "
-                    + "WHERE Origen=? and Destino=? and HoraSalida =? and Fecha = CURDATE()";
-            ps = con.prepareStatement(sql);
-            ps.setString(1, origen);
-            ps.setString(2, destino);
-            ps.setString(3, horaSalida);
-            
-            ResultSet rs=ps.executeQuery();  
-                
-            if(rs.next()){
-                if(rs.getRow() > 0){
-                    rs=ps.executeQuery();  
-                    inicializarAsientos();
-                    while(rs.next()){
-                        String DBHorario=rs.getString("HoraSalida");
-                        String DBOrigen=rs.getString("Origen");
-                        String DBDestino=rs.getString("Destino");
-                        String DBLinea=rs.getString("Linea");
-                        txtHorario.setText(DBHorario);
-                        txtDestino.setText(DBDestino);
-                        txtOrigen.setText(DBOrigen);
-                        txtLinea.setText(DBLinea);
-                    }                      
-                }
-            }else{
-                JOptionPane.showMessageDialog(null, "No existe esta ruta");
-            }
-        }catch(SQLException e){
-            JOptionPane.showMessageDialog(null, "Error de conexión:" + e.getMessage());
-        }   
-
     }
     
     public void tablaDiseño(){        
@@ -482,7 +278,7 @@ public class Boleto extends javax.swing.JFrame {
     public Boleto() {
         initComponents();
         this.setLocationRelativeTo(null);
-        llenarComboBoxOrigenDestino();
+        //llenarComboBoxOrigenDestino();
     }
 
     /**

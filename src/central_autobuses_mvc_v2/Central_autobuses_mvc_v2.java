@@ -10,13 +10,26 @@ import view.Autobuses;
 import view.Boleto;
 import view.Conductores;
 import view.Inicio;
+import view.Loader;
 import view.Rutas;
 
 public class Central_autobuses_mvc_v2 {
 
     public static void main(String[] args) {
+
         Inicio Home = new Inicio();
-        Home.setVisible(true);
+        try {
+            Loader L = new Loader();
+            L.setVisible(true);
+
+            Thread.sleep(4*1000);
+            L.setVisible(false);
+             
+            Home.setVisible(true);
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        
         
         //Models
         modelRutas modelR = new modelRutas();

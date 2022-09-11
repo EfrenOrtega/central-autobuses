@@ -5,6 +5,7 @@
  */
 package view;
 
+
 /**
  *
  * @author Efren
@@ -16,7 +17,8 @@ public class Inicio extends javax.swing.JFrame {
      */
     public Inicio() {
         initComponents();
-        this.setLocationRelativeTo(null);
+        this.setLocationRelativeTo(null); 
+               
     }
 
     /**
@@ -130,11 +132,6 @@ public class Inicio extends javax.swing.JFrame {
         btnConductores.setForeground(new java.awt.Color(255, 255, 255));
         btnConductores.setText("Conductores");
         btnConductores.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnConductores.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnConductoresMouseClicked(evt);
-            }
-        });
         jPanelMenu.add(btnConductores, new org.netbeans.lib.awtextra.AbsoluteConstraints(92, 500, -1, -1));
 
         jLabel12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Conductor.png"))); // NOI18N
@@ -224,12 +221,6 @@ public class Inicio extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void btnConductoresMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnConductoresMouseClicked
-        Conductores Chofer = new Conductores();
-        this.setVisible(false);
-        Chofer.setVisible(true);
-    }//GEN-LAST:event_btnConductoresMouseClicked
 
     /**
      * @param args the command line arguments

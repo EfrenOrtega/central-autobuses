@@ -147,6 +147,9 @@ public class controller implements ActionListener, MouseListener{
         }
         
         if(e.getSource() == Home.BtnBoleto){
+            modelB.setOrigen(Ticket.Origen);
+            modelB.setDestino(Ticket.Destino);
+            modelB.llenarComboBoxOrigenDestino();
             CargarBoletos();
             Home.setVisible(false);
             Ticket.setVisible(true);
@@ -281,6 +284,9 @@ public class controller implements ActionListener, MouseListener{
         } 
         
         if(e.getSource() == autobuses.btnBoletos){
+            modelB.setOrigen(Ticket.Origen);
+            modelB.setDestino(Ticket.Destino);
+            modelB.llenarComboBoxOrigenDestino();
             CargarBoletos();
             autobuses.setVisible(false);
             Ticket.setVisible(true);
@@ -330,6 +336,9 @@ public class controller implements ActionListener, MouseListener{
         } 
         
         if(e.getSource() == rutes.btnBoletos){
+            modelB.setOrigen(Ticket.Origen);
+            modelB.setDestino(Ticket.Destino);
+            modelB.llenarComboBoxOrigenDestino();
             CargarBoletos();
             rutes.setVisible(false);
             Ticket.setVisible(true);
@@ -379,7 +388,10 @@ public class controller implements ActionListener, MouseListener{
         } 
         
         if(e.getSource() == conductor.btnBoletos){
+            modelB.setOrigen(Ticket.Origen);
+            modelB.setDestino(Ticket.Destino);
             CargarBoletos();
+            modelB.llenarComboBoxOrigenDestino();
             conductor.setVisible(false);
             Ticket.setVisible(true);
         }
@@ -480,6 +492,7 @@ public class controller implements ActionListener, MouseListener{
             if(res){
                 this.CargarBoletos();
             }
+            limpiarcajasTextoBoletos();
             
         } else {
             JOptionPane.showMessageDialog(null, "Seleccione un Registro");
@@ -496,6 +509,7 @@ public class controller implements ActionListener, MouseListener{
                 if(res){
                     this.CargarBoletos();
                 }
+                limpiarcajasTextoBoletos();
             } else {
                 JOptionPane.showMessageDialog(null, "Seleccione un Registro");
             }
@@ -537,6 +551,7 @@ public class controller implements ActionListener, MouseListener{
             if(res){
                 this.CargarBoletos();
             }
+            limpiarcajasTextoBoletos();
         } else {
             JOptionPane.showMessageDialog(null, "Llena todos los campos");
         }
@@ -558,7 +573,19 @@ public class controller implements ActionListener, MouseListener{
         
       }  
     }
-    //===========================
+    
+    public void limpiarcajasTextoBoletos(){
+        Ticket.txtID.setText("");
+        Ticket.txtNombre.setText("");
+        Ticket.txtOrigen.setText("");
+        Ticket.txtDestino.setText("");
+        Ticket.txtHorario.setText("");
+        Ticket.txtCosto.setText("");
+        Ticket.txtLinea.setText("");
+    }
+    
+    
+//===========================
     //  Métodos Autobuses
     //===========================
     public void CargarAutobuses(){

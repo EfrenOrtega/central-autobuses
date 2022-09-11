@@ -1,8 +1,6 @@
 package model;
 
-import com.toedter.calendar.JCalendar;
 import com.toedter.calendar.JDateChooser;
-import controller.controller;
 import java.awt.event.MouseEvent;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -11,6 +9,7 @@ import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
@@ -18,13 +17,9 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
 
 
-        /*
-            txtID.setText(String.valueOf(TableBoletos.getValueAt(registro, 0)));
-        txtNombre.setText(String.valueOf(TableBoletos.getValueAt(registro, 1)));
-        txtCosto
-        */
 public class modelBoletos {
 
     private JTextField textOrigen;
@@ -855,5 +850,49 @@ public class modelBoletos {
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Error de conexión: 1" + e.getMessage());
         }
+    }
+
+    public String horaActual() {
+        SimpleDateFormat dtf = new SimpleDateFormat("yyyy-MM-dd");
+        Calendar calendar = Calendar.getInstance();
+
+        Date dateObj = calendar.getTime();
+        String formattedDate = dtf.format(dateObj);
+
+        return formattedDate;
+    }
+    
+    public void llenarComboBoxOrigenDestino() {
+        PreparedStatement ps;
+        String sql;
+
+        String HoraActual = horaActual();
+
+        try {
+            sql = "SELECT Origen, Destino FROM rutas WHERE Fecha = ?";
+            ps = con.prepareStatement(sql);
+            ps.setString(1, HoraActual);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                if (rs.getRow() > 0) {
+                    rs = ps.executeQuery();
+                    inicializarAsientos();
+                    while (rs.next()) {
+                        String DBOrigen = rs.getString("Origen");
+                        String DBDestino = rs.getString("Destino");
+                        Origen.addItem(DBOrigen);
+                        Destino.addItem(DBDestino);
+                    }
+                }
+            } else {
+                System.out.print("No hay Rutas Actuales\n");
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error de conexión:" + e.getMessage());
+        }
+
+        AutoCompleteDecorator.decorate(this.Destino);
+        AutoCompleteDecorator.decorate(this.Origen);
     }
 }
