@@ -139,7 +139,31 @@ public class controller implements ActionListener, MouseListener{
         //          Events Home View
         //========================================
         
-
+        //Menu
+        if(e.getSource() == Home.BtnAutobus){
+            CargarAutobuses();
+            Home.setVisible(false);
+            autobuses.setVisible(true);
+        }
+        
+        if(e.getSource() == Home.BtnBoleto){
+            CargarBoletos();
+            Home.setVisible(false);
+            Ticket.setVisible(true);
+        }
+        
+        if(e.getSource() == Home.BtnRutas){
+            CargarRegistrosRutas();
+            Home.setVisible(false);
+            rutes.setVisible(true);
+        }
+        
+        if(e.getSource() == Home.btnConductores){
+            CargarRegistrosConductors();
+            Home.setVisible(false);
+            conductor.setVisible(true);
+        }
+        //FIN MENU        
         
         if(e.getSource() == Home.Boton_Entrar_Boletos){
             CargarBoletos();
@@ -171,14 +195,32 @@ public class controller implements ActionListener, MouseListener{
         //==================================     
         
         //Menu
-        if(e.getSource() == Home.BtnAutobus){
-            
-        }
         
         if(e.getSource() == Ticket.btnInicio){
             Ticket.setVisible(false);
             Home.setVisible(true);
         } 
+        
+        if(e.getSource() == Ticket.btnAutobus){
+            CargarAutobuses();
+            Ticket.setVisible(false);
+            autobuses.setVisible(true);
+        }
+        
+        if(e.getSource() == Ticket.btnConductores){
+            CargarRegistrosConductors();
+            Ticket.setVisible(false);
+            conductor.setVisible(true);
+        }
+        
+        if(e.getSource() == Ticket.btnRutas){
+            CargarRegistrosRutas();
+            Ticket.setVisible(false);
+            rutes.setVisible(true);
+        }
+        
+        //FIN MENU
+        
         
         if(e.getSource() == Ticket.Modificar){
             ActualizarBoletos();
@@ -230,6 +272,35 @@ public class controller implements ActionListener, MouseListener{
         //==================================
         //    Events of Autobuses View
         //==================================
+        
+        //Menu
+        
+        if(e.getSource() == autobuses.btnInicio){
+            autobuses.setVisible(false);
+            Home.setVisible(true);
+        } 
+        
+        if(e.getSource() == autobuses.btnBoletos){
+            CargarBoletos();
+            autobuses.setVisible(false);
+            Ticket.setVisible(true);
+        }
+        
+        if(e.getSource() == autobuses.btnConductores){
+            CargarRegistrosConductors();
+            autobuses.setVisible(false);
+            conductor.setVisible(true);
+        }
+        
+        if(e.getSource() == autobuses.btnRutas){
+            CargarRegistrosRutas();
+            autobuses.setVisible(false);
+            rutes.setVisible(true);
+        }
+        
+        //FIN MENU
+        
+        
         if(e.getSource() == autobuses.btnInicio){
             autobuses.setVisible(false);
             Home.setVisible(true);
@@ -251,6 +322,34 @@ public class controller implements ActionListener, MouseListener{
         //===================================
         //     Events of Rutas View
         //===================================
+        
+        //Menu
+        if(e.getSource() == rutes.btnInicio){
+            rutes.setVisible(false);
+            Home.setVisible(true);
+        } 
+        
+        if(e.getSource() == rutes.btnBoletos){
+            CargarBoletos();
+            rutes.setVisible(false);
+            Ticket.setVisible(true);
+        }
+        
+        if(e.getSource() == rutes.btnConductores){
+            CargarRegistrosConductors();
+            rutes.setVisible(false);
+            conductor.setVisible(true);
+        }
+        
+        if(e.getSource() == rutes.btnAutobuses){
+            CargarAutobuses();
+            rutes.setVisible(false);
+            autobuses.setVisible(true);
+        }
+        
+        //FIN MENU
+        
+        
         if(e.getSource() == rutes.btnInicio){
             rutes.setVisible(false);
             Home.setVisible(true);
@@ -272,6 +371,33 @@ public class controller implements ActionListener, MouseListener{
         //======================================
         //     Events of Conductores View
         //======================================
+        
+        //Menu
+        if(e.getSource() == conductor.btnInicio){
+            conductor.setVisible(false);
+            Home.setVisible(true);
+        } 
+        
+        if(e.getSource() == conductor.btnBoletos){
+            CargarBoletos();
+            conductor.setVisible(false);
+            Ticket.setVisible(true);
+        }
+        
+        if(e.getSource() == conductor.btnRutas){
+            CargarRegistrosRutas();
+            conductor.setVisible(false);
+            rutes.setVisible(true);
+        }
+        
+        if(e.getSource() == conductor.btnAutobuses){
+            CargarAutobuses();
+            conductor.setVisible(false);
+            autobuses.setVisible(true);
+        }
+        
+        //FIN MENU
+        
         if(e.getSource() == conductor.btnInicio){
             conductor.setVisible(false);
             Home.setVisible(true);

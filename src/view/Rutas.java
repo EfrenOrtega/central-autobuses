@@ -276,7 +276,7 @@ public class Rutas extends javax.swing.JFrame {
         btnInicio.setFont(new java.awt.Font("Roboto Medium", 0, 16)); // NOI18N
         btnInicio.setForeground(new java.awt.Color(255, 255, 255));
         btnInicio.setText("Inicio");
-        btnInicio.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        btnInicio.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jPanelMenu.add(btnInicio, new org.netbeans.lib.awtextra.AbsoluteConstraints(98, 189, -1, -1));
 
         jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Home.png"))); // NOI18N
@@ -288,12 +288,7 @@ public class Rutas extends javax.swing.JFrame {
         btnAutobuses.setFont(new java.awt.Font("Roboto Medium", 0, 16)); // NOI18N
         btnAutobuses.setForeground(new java.awt.Color(255, 255, 255));
         btnAutobuses.setText("Autobuses");
-        btnAutobuses.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        btnAutobuses.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnAutobusesMouseClicked(evt);
-            }
-        });
+        btnAutobuses.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jPanelMenu.add(btnAutobuses, new org.netbeans.lib.awtextra.AbsoluteConstraints(94, 345, -1, -1));
 
         jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Bus.png"))); // NOI18N
@@ -302,12 +297,7 @@ public class Rutas extends javax.swing.JFrame {
         btnBoletos.setFont(new java.awt.Font("Roboto Medium", 0, 16)); // NOI18N
         btnBoletos.setForeground(new java.awt.Color(255, 255, 255));
         btnBoletos.setText("Boletos");
-        btnBoletos.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        btnBoletos.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnBoletosMouseClicked(evt);
-            }
-        });
+        btnBoletos.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jPanelMenu.add(btnBoletos, new org.netbeans.lib.awtextra.AbsoluteConstraints(94, 265, 90, 30));
 
         jLabel9.setFont(new java.awt.Font("Roboto Medium", 0, 16)); // NOI18N
@@ -328,12 +318,7 @@ public class Rutas extends javax.swing.JFrame {
         btnConductores.setFont(new java.awt.Font("Roboto Medium", 0, 16)); // NOI18N
         btnConductores.setForeground(new java.awt.Color(255, 255, 255));
         btnConductores.setText("Conductores");
-        btnConductores.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        btnConductores.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnConductoresMouseClicked(evt);
-            }
-        });
+        btnConductores.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jPanelMenu.add(btnConductores, new org.netbeans.lib.awtextra.AbsoluteConstraints(92, 500, -1, -1));
 
         jLabel12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Conductor.png"))); // NOI18N
@@ -568,22 +553,6 @@ public class Rutas extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void btnBoletosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBoletosMouseClicked
-        Boleto Ticket = new Boleto();
-        this.setVisible(false);
-        Ticket.setVisible(true);
-    }//GEN-LAST:event_btnBoletosMouseClicked
-
-    private void btnAutobusesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAutobusesMouseClicked
-        Autobuses Bus = new Autobuses();
-        this.setVisible(false);
-        Bus.setVisible(true);    }//GEN-LAST:event_btnAutobusesMouseClicked
-
-    private void btnConductoresMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnConductoresMouseClicked
-        Conductores Chofer = new Conductores();
-        this.setVisible(false);
-        Chofer.setVisible(true);    }//GEN-LAST:event_btnConductoresMouseClicked
 
     private void tablaRutasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaRutasMouseClicked
         int registro = tablaRutas.rowAtPoint(evt.getPoint());
