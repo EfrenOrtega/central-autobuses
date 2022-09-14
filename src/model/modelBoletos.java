@@ -852,4 +852,57 @@ public class modelBoletos {
         }
     }
 
+    public String horaActual() {
+        SimpleDateFormat dtf = new SimpleDateFormat("yyyy-MM-dd");
+        Calendar calendar = Calendar.getInstance();
+
+        Date dateObj = calendar.getTime();
+        String formattedDate = dtf.format(dateObj);
+
+        return formattedDate;
+    }    
+    
+    public void llenarComboBoxOrigenDestino() {
+        PreparedStatement ps;
+        String sql;
+
+        String HoraActual = horaActual();
+                
+        try {
+            sql = "SELECT Origen, Destino FROM rutas WHERE Fecha = ?";
+            ps = con.prepareStatement(sql);
+            ps.setString(1, HoraActual);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                if (rs.getRow() > 0) {
+                    rs = ps.executeQuery();  
+                    
+                    this.Origen.removeAllItems();
+                    this.Destino.removeAllItems();
+                    this.Origen.addItem("-- Origen --");
+                    this.Destino.addItem("-- Destino --");
+                    this.Origen.setSelectedIndex(0);
+                    this.Destino.setSelectedIndex(0);
+
+
+                    
+                    inicializarAsientos();
+                    while (rs.next()) {
+                        String DBOrigen = rs.getString("Origen");
+                        String DBDestino = rs.getString("Destino");
+                        this.Origen.addItem(DBOrigen);
+                        this.Destino.addItem(DBDestino);
+                    }
+                }
+            } else {
+                System.out.print("No hay Rutas Actuales\n");
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error de conexión:" + e.getMessage());
+        }
+
+        AutoCompleteDecorator.decorate(this.Destino);
+        AutoCompleteDecorator.decorate(this.Origen);
+    }
 }

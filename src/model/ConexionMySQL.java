@@ -7,7 +7,7 @@ import java.sql.DriverManager;
 public class ConexionMySQL {
     public static final String URL = "jdbc:mysql://localhost:3306/centralAutobuses";
     public static final String USER = "root";
-    public static final String PASSWORD ="1234";
+    public static final String PASSWORD ="";
     
     public Connection getConexion(){
         Connection con = null;

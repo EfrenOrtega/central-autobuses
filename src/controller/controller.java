@@ -5,6 +5,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -21,7 +23,7 @@ import view.Inicio;
 import view.Rutas;
 
 
-public class controller implements ActionListener, MouseListener{
+public class controller implements ActionListener, MouseListener, WindowListener{
 
     public Inicio Home;    
     public Boleto Ticket;
@@ -81,6 +83,7 @@ public class controller implements ActionListener, MouseListener{
         vB.Cargar.addMouseListener(this);
         vB.btnCargar.addMouseListener(this);
         vB.btnBuscar.addMouseListener(this);
+        vB.addWindowListener(this);
 
         
         //Autobuses View
@@ -972,4 +975,38 @@ public class controller implements ActionListener, MouseListener{
     }
         
     //Code created by E.O
+
+    @Override
+    public void windowOpened(WindowEvent e) {
+    }
+
+    @Override
+    public void windowClosing(WindowEvent e) {
+    }
+
+    @Override
+    public void windowClosed(WindowEvent e) {
+    }
+
+    @Override
+    public void windowIconified(WindowEvent e) {
+    }
+
+    @Override
+    public void windowDeiconified(WindowEvent e) {
+    }
+
+    @Override
+    public void windowActivated(WindowEvent e) {
+        if(e.getSource() == Ticket){
+            iniciarAsientos();
+            modelB.setOrigen(Ticket.Origen);
+            modelB.setDestino(Ticket.Destino);
+            modelB.llenarComboBoxOrigenDestino();
+        }
+    }
+
+    @Override
+    public void windowDeactivated(WindowEvent e) {
+    }
 }

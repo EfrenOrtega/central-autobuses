@@ -18,17 +18,7 @@ public class Central_autobuses_mvc_v2 {
     public static void main(String[] args) {
 
         Inicio Home = new Inicio();
-        try {
-            Loader L = new Loader();
-            L.setVisible(true);
-
-            Thread.sleep(4*1000);
-            L.setVisible(false);
-             
-            Home.setVisible(true);
-        } catch (Exception e) {
-            System.out.println(e);
-        }
+        Home.setVisible(true);
         
         
         //Models

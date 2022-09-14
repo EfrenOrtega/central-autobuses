@@ -158,171 +158,9 @@ public class Boleto extends javax.swing.JFrame {
         txtLinea.setText("");
     }
     
-    public void AsientoDisponibles(){
-
-        String origen = txtOrigen.getText();
-        String destino = txtDestino.getText();
-        String hora = txtHorario.getText();
-
-        String formato = jDateFecha.getDateFormatString();
-        Date date = jDateFecha.getDate();
-        SimpleDateFormat sdf = new SimpleDateFormat(formato);
-        String Fsalida = String.valueOf(sdf.format(date));
-        
-        String Linea = txtLinea.getText();
-        PreparedStatement ps;
-        String sql;
-
-        try{
-            sql="SELECT Asiento FROM boletos WHERE Origen=? and Destino=? and Hora=? and Fecha = ? and Linea=?";
-            ps = con.prepareStatement(sql);
-            ps.setString(1, origen);
-            ps.setString(2, destino);
-            ps.setString(3, hora);
-            ps.setString(4, Fsalida);
-            ps.setString(5, Linea);
-
-            ResultSet rs=ps.executeQuery();  
-
-            if(rs.next()){
-                BoxAsiento.removeAllItems();
-                if(rs.getRow() > 0){
-                    rs=ps.executeQuery();  
-                    inicializarAsientos();
-                    int x=0;
-                    ArrayList<String> AsientosDisponibles = new ArrayList<String>();
-                    for (int i=1; i<=24; i++){
-                        AsientosDisponibles.add(String.valueOf(i)); 
-                    }                   
-
-                    while(rs.next()){
-                        String Asientos=rs.getString("Asiento");
-                        int AsientoReservadoActual=Integer.parseInt(AsientoDisponible);
-                        int Asiento = Integer.parseInt(Asientos);
-                        if(Asiento < 12){
-                            if(Asiento == 1){
-                                Asiento1.setIcon(new ImageIcon("build/classes/img/Asientos/Asiento 1 Rojo.png"));                                
-                            }else if(Asiento == 2){
-                                Asiento2.setIcon(new ImageIcon("build/classes/img/Asientos/Asiento 2 Rojo.png"));
-                            }else if(Asiento==3){
-                                Asiento3.setIcon(new ImageIcon("build/classes/img/Asientos/Asiento 3 Rojo.png"));
-                            }else if(Asiento==4){
-                                Asiento4.setIcon(new ImageIcon("build/classes/img/Asientos/Asiento 4 Rojo.png"));                                
-                            }else if(Asiento == 5){
-                                Asiento5.setIcon(new ImageIcon("build/classes/img/Asientos/Asiento 5 Rojo.png"));
-                            }else if(Asiento==6){
-                                Asiento6.setIcon(new ImageIcon("build/classes/img/Asientos/Asiento 6 Rojo.png"));
-                            }else if(Asiento==7){
-                                Asiento7.setIcon(new ImageIcon("build/classes/img/Asientos/Asiento 7 Rojo.png"));
-                            }else if(Asiento == 8){
-                                Asiento8.setIcon(new ImageIcon("build/classes/img/Asientos/Asiento 8 Rojo.png"));
-                            }else if(Asiento == 9){
-                                Asiento9.setIcon(new ImageIcon("build/classes/img/Asientos/Asiento 9 Rojo.png"));
-                            }else if(Asiento == 10){
-                                Asiento10.setIcon(new ImageIcon("build/classes/img/Asientos/Asiento 10 Rojo.png"));
-                            }else if(Asiento == 11){
-                                Asiento11.setIcon(new ImageIcon("build/classes/img/Asientos/Asiento 11 Rojo.png"));
-                            }
-                        }else if(Asiento >= 12){    
-                            if(Asiento == 12){
-                                Asiento12.setIcon(new ImageIcon("build/classes/img/Asientos/Asiento 12 Rojo.png"));
-                            }else if(Asiento == 13){
-                                Asiento13.setIcon(new ImageIcon("build/classes/img/Asientos/Asiento 13 Rojo.png"));
-                            }else if(Asiento == 14){
-                                Asiento14.setIcon(new ImageIcon("build/classes/img/Asientos/Asiento 14 Rojo.png"));
-                            }else if(Asiento == 15){
-                                Asiento15.setIcon(new ImageIcon("build/classes/img/Asientos/Asiento 15 Rojo.png"));
-                            }else if(Asiento == 16){
-                                Asiento16.setIcon(new ImageIcon("build/classes/img/Asientos/Asiento 16 Rojo.png"));
-                            }else  if(Asiento == 17){
-                                Asiento17.setIcon(new ImageIcon("build/classes/img/Asientos/Asiento 17 Rojo.png"));
-                            }else if(Asiento == 18){
-                                Asiento18.setIcon(new ImageIcon("build/classes/img/Asientos/Asiento 18 Rojo.png"));
-                            }else if(Asiento == 19){
-                                Asiento19.setIcon(new ImageIcon("build/classes/img/Asientos/Asiento 19 Rojo.png"));
-                            }else if(Asiento == 20){
-                                Asiento20.setIcon(new ImageIcon("build/classes/img/Asientos/Asiento 20 Rojo.png"));
-                            }else if(Asiento == 21){
-                                Asiento21.setIcon(new ImageIcon("build/classes/img/Asientos/Asiento 21 Rojo.png"));
-                            }else if(Asiento == 22){
-                                Asiento22.setIcon(new ImageIcon("build/classes/img/Asientos/Asiento 22 Rojo.png"));
-                            }else if(Asiento == 23){
-                                Asiento23.setIcon(new ImageIcon("build/classes/img/Asientos/Asiento 23 Rojo.png"));
-                            }else if(Asiento == 24){
-                                Asiento24.setIcon(new ImageIcon("build/classes/img/Asientos/Asiento 24 Rojo.png"));
-                            }
-                        }
-                        if(Asiento != AsientoReservadoActual){
-                            AsientosDisponibles.remove(Asientos);
-                        }
-                        x++;               
-                    }
-                    String[] miarray = new String[AsientosDisponibles.size()];
-                    miarray = AsientosDisponibles.toArray(miarray);
-                    for(String s : miarray)
-                      BoxAsiento.addItem(s);
-                    }
-
-            }else{
-                System.out.print("No hay registros aun");
-                for(int i=1; i<=24; i++){
-                    BoxAsiento.addItem(String.valueOf(i));
-                }
-                inicializarAsientos();
-            }
-        }catch(SQLException e){
-            JOptionPane.showMessageDialog(null, "Error de conexión:" + e.getMessage());
-        }   
-    }
-
-    public String horaActual() {
-        SimpleDateFormat dtf = new SimpleDateFormat("yyyy-MM-dd");
-        Calendar calendar = Calendar.getInstance();
-
-        Date dateObj = calendar.getTime();
-        String formattedDate = dtf.format(dateObj);
-
-        return formattedDate;
-    }
-    
-    public void llenarComboBoxOrigenDestino() {
-        PreparedStatement ps;
-        String sql;
-
-        String HoraActual = horaActual();
-
-        try {
-            sql = "SELECT Origen, Destino FROM rutas WHERE Fecha = ?";
-            ps = con.prepareStatement(sql);
-            ps.setString(1, HoraActual);
-            ResultSet rs = ps.executeQuery();
-
-            if (rs.next()) {
-                if (rs.getRow() > 0) {
-                    rs = ps.executeQuery();
-                    inicializarAsientos();
-                    while (rs.next()) {
-                        String DBOrigen = rs.getString("Origen");
-                        String DBDestino = rs.getString("Destino");
-                        Origen.addItem(DBOrigen);
-                        Destino.addItem(DBDestino);
-                    }
-                }
-            } else {
-                System.out.print("No hay Rutas Actuales\n");
-            }
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Error de conexión:" + e.getMessage());
-        }
-
-        AutoCompleteDecorator.decorate(Destino);
-        AutoCompleteDecorator.decorate(Origen);
-    }
-    
     public Boleto() {
         initComponents();
-        this.setLocationRelativeTo(null);
-        llenarComboBoxOrigenDestino();
+        this.setLocationRelativeTo(null);       
     }
 
     /**
@@ -801,11 +639,6 @@ public class Boleto extends javax.swing.JFrame {
 
         Origen.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-- Origen --" }));
         Origen.setDoubleBuffered(true);
-        Origen.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                OrigenItemStateChanged(evt);
-            }
-        });
         jPanel1.add(Origen, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 50, 140, 30));
 
         Destino.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-- Destino --" }));
@@ -835,11 +668,6 @@ public class Boleto extends javax.swing.JFrame {
 
         ComboHorario.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-- Horario --" }));
         ComboHorario.setBorder(null);
-        ComboHorario.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                ComboHorarioItemStateChanged(evt);
-            }
-        });
         jPanel1.add(ComboHorario, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 140, 140, 30));
 
         btnCargar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Recargar.png"))); // NOI18N
@@ -866,12 +694,6 @@ public class Boleto extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void ComboHorarioItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_ComboHorarioItemStateChanged
-    }//GEN-LAST:event_ComboHorarioItemStateChanged
-
-    private void OrigenItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_OrigenItemStateChanged
-    }//GEN-LAST:event_OrigenItemStateChanged
 
     private void btnBuscarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBuscarMouseClicked
     
